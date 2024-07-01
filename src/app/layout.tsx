@@ -21,6 +21,7 @@ export default function RootLayout({
 				<link rel="stylesheet" href={`${url}/public/css/app.css`} />
 				<link rel="stylesheet" href={`${url}/public/css/font-sizes.css`} />
 				<link rel="stylesheet" href={`${url}/public/css/normalize.css`} />
+				<link rel="stylesheet" href={`${url}/public/css/powered-by.css`} />
 				
 				{/* Font */}
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,6 +40,16 @@ export default function RootLayout({
 				<header className="site-header contenedor">
 					<a href="/">
 						<img src={`${url}/public/img/logo.png`} alt="Meeti Logo" />
+					
+						{/* Powered by */}
+						<div className="website-powered-by">
+							<p>
+								Powered by
+							</p>
+							<p className="framework-nextjs">
+								NextJS
+							</p>
+						</div>
 					</a>
 					
 					<nav className="nav">
