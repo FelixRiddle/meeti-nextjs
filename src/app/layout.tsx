@@ -9,6 +9,8 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+	const url = apiUrl();
+	
     return (
         <html lang="en">
             <head>
@@ -16,9 +18,9 @@ export default function RootLayout({
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 
 				{/* Styles */}
-				<link rel="stylesheet" href={`${apiUrl()}/public/css/app.css`} />
-				<link rel="stylesheet" href={`${apiUrl()}/public/css/font-sizes.css`} />
-				<link rel="stylesheet" href={`${apiUrl()}/public/css/normalize.css`} />
+				<link rel="stylesheet" href={`${url}/public/css/app.css`} />
+				<link rel="stylesheet" href={`${url}/public/css/font-sizes.css`} />
+				<link rel="stylesheet" href={`${url}/public/css/normalize.css`} />
 				
 				{/* Font */}
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,7 +36,29 @@ export default function RootLayout({
                 <title>Meeti Nextjs</title>
             </head>
             <body>
+				<header className="site-header contenedor">
+					<a href="/">
+						<img src={`${url}/public/img/logo.png`} alt="Meeti Logo" />
+					</a>
+					
+					<nav className="nav">
+						<a href="#">Create group</a>
+						<a href="/auth/login">Login</a>
+						<a href="/auth/register">Register</a>
+					</nav>
+				</header>
+				
                 {children}
+				
+				<footer className="site-footer contenedor">
+					<nav className="nav">
+						<a href="#">Create group</a>
+						<a href="/auth/login">Login</a>
+						<a href="/auth/register">Register</a>
+					</nav>
+					
+					<div className="copyright">All rights reserved Meeti 2024 &copy;</div>
+				</footer>
             </body>
         </html>
     );
