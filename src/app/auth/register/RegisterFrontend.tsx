@@ -1,13 +1,15 @@
 "use client";
 
 import { registerUser } from "@/api/requestTypes";
-import { useRef } from "react";
+import Messages from "@/components/Messages";
+import { useRef, useState } from "react";
 
 /**
  * Register frontend
  */
-export default async function RegisterFrontend() {
+export default function RegisterFrontend() {
 	const form = useRef(null);
+	const [messages, setMessages] = useState([]);
 	
 	async function submitForm(e: any) {
 		e.preventDefault();
@@ -18,11 +20,19 @@ export default async function RegisterFrontend() {
 		
 		const formData = new FormData(form.current);
 		
-		await registerUser(formData);
+		const data = await registerUser(formData);
+		
+		console.log(`Response: `, data);
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
 	}
 	
 	return (
 		<div>
+			<Messages messages={messages}/>
+			
 			<form
 				method="POST"
 				className="default-form"
