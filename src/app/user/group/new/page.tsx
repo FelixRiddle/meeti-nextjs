@@ -1,5 +1,6 @@
 "use server";
 
+import { getCategories } from "@/api/requestTypes";
 import NewGroupFrontend from "./NewGroupFrontend";
 
 /**
@@ -7,9 +8,15 @@ import NewGroupFrontend from "./NewGroupFrontend";
  */
 export default async function Page() {
 	
+	const categoriesResponse = await getCategories();
+	
+	console.log(`Response: `, categoriesResponse);
+	
+	const categories = categoriesResponse.categories;
+	
 	return (
 		<div>
-			<NewGroupFrontend />
+			<NewGroupFrontend categories={categories} />
 		</div>
 	);
 }

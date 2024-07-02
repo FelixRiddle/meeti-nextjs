@@ -1,6 +1,6 @@
 "use client";
 
-import { loginUser } from "@/api/requestTypes";
+import loginRequest from "@/api/auth/loginRequest";
 import Messages from "@/components/Messages";
 import { useRef, useState } from "react";
 
@@ -20,7 +20,7 @@ export default function LoginFrontend() {
 		
 		const formData = new FormData(form.current);
 		
-		const data = await loginUser(formData);
+		const data = await loginRequest(formData);
 		
 		if(data.messages) {
 			setMessages(data.messages);

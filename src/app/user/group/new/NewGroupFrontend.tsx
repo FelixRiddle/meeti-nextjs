@@ -1,11 +1,16 @@
 "use client";
 
 import apiUrl from "@/lib/config/apiUrl";
+import { Category } from "@/types/Category";
 
 /**
  * 
  */
-export default function NewGroupFrontend() {
+export default function NewGroupFrontend({
+	categories,
+}: {
+	categories: Array<Category>,
+}) {
 	const url = apiUrl();
 	
 	return (
@@ -35,6 +40,11 @@ export default function NewGroupFrontend() {
 						<label htmlFor="category">Category</label>
 						<select name="category" id="category">
 							<option value="" selected disabled>- Select one -</option>
+							{categories.map((category) => {
+								return (
+									<option value={`${category.id}`}>{category.name}</option>
+								)
+							})}
 						</select>
 					</div>
 					
