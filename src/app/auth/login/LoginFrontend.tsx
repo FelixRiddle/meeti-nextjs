@@ -1,6 +1,7 @@
 "use client";
 
 import { loginUser } from "@/api/requestTypes";
+import Messages from "@/components/Messages";
 import { useRef, useState } from "react";
 
 /**
@@ -21,8 +22,6 @@ export default function LoginFrontend() {
 		
 		const data = await loginUser(formData);
 		
-		console.log(`Response: `, data);
-		
 		if(data.messages) {
 			setMessages(data.messages);
 		}
@@ -30,6 +29,7 @@ export default function LoginFrontend() {
 	
 	return (
 		<div>
+			<Messages messages={messages}/>
 			
 			<main className="contenedor contenedor-formularios">
 				<h1>Login</h1>
