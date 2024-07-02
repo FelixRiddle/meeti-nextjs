@@ -1,5 +1,6 @@
 import apiUrl from "@/lib/config/apiUrl";
 import "./globals.css";
+import { authenticate } from "@/lib/auth/authenticate";
 
 /**
  * Root layout
@@ -10,6 +11,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
 	const url = apiUrl();
+	const user = authenticate();
 	
     return (
         <html lang="en">
@@ -52,21 +54,33 @@ export default function RootLayout({
 						</div>
 					</a>
 					
-					<nav className="nav">
-						<a href="#">Create group</a>
-						<a href="/auth/login">Login</a>
-						<a href="/auth/register">Register</a>
-					</nav>
+					{!user && (
+						<nav className="nav">
+							<a href="#">Create group</a>
+							<a href="/auth/login">Login</a>
+							<a href="/auth/register">Register</a>
+						</nav>
+					) || (
+						<nav className="nav">
+							<a href="/user/admin">Admin</a>
+						</nav>
+					)}
 				</header>
 				
                 {children}
 				
 				<footer className="site-footer contenedor">
-					<nav className="nav">
-						<a href="#">Create group</a>
-						<a href="/auth/login">Login</a>
-						<a href="/auth/register">Register</a>
-					</nav>
+					{!user && (
+						<nav className="nav">
+							<a href="#">Create group</a>
+							<a href="/auth/login">Login</a>
+							<a href="/auth/register">Register</a>
+						</nav>
+					) || (
+						<nav className="nav">
+							<a href="/user/admin">Admin</a>
+						</nav>
+					)}
 					
 					<div className="copyright">All rights reserved Meeti 2024 &copy;</div>
 				</footer>
