@@ -10,8 +10,6 @@ export default async function Page() {
 	
 	const categoriesResponse = await getCategories();
 	
-	console.log(`Response: `, categoriesResponse);
-	
 	const categories = categoriesResponse.categories;
 	
 	return (
