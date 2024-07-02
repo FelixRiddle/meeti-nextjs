@@ -1,13 +1,12 @@
 "use client";
 
-import { registerUser } from "@/api/requestTypes";
-import Messages from "@/components/Messages";
+import { loginUser } from "@/api/requestTypes";
 import { useRef, useState } from "react";
 
 /**
- * Register frontend
+ * Login page
  */
-export default function RegisterFrontend() {
+export default function LoginFrontend() {
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
 	
@@ -20,7 +19,7 @@ export default function RegisterFrontend() {
 		
 		const formData = new FormData(form.current);
 		
-		const data = await registerUser(formData);
+		const data = await loginUser(formData);
 		
 		console.log(`Response: `, data);
 		
@@ -31,12 +30,12 @@ export default function RegisterFrontend() {
 	
 	return (
 		<div>
-			<Messages messages={messages}/>
 			
 			<main className="contenedor contenedor-formularios">
-				<h1>Register</h1>
+				<h1>Login</h1>
 				
 				<form
+					action="/auth/login"
 					method="POST"
 					className="default-form"
 					ref={form}
@@ -47,22 +46,12 @@ export default function RegisterFrontend() {
 					</div>
 					
 					<div className="campo">
-						<label htmlFor="name">Name</label>
-						<input type="text" id="name" name="name" placeholder="Name" required />
-					</div>
-					
-					<div className="campo">
 						<label htmlFor="password">Password</label>
 						<input type="password" id="password" name="password" placeholder="Password" required />
 					</div>
 					
 					<div className="campo">
-						<label htmlFor="confirmPassword">Confirm password</label>
-						<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required />
-					</div>
-					
-					<div className="campo">
-						<input type="submit" value="Create account" className="btn btn-rosa" onClick={submitForm}/>
+						<input type="submit" value="Login" className="btn btn-rosa" onClick={submitForm} />
 					</div>
 				</form>
 			</main>
