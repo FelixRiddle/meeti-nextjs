@@ -1,3 +1,4 @@
+import { User } from "@/types/User";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -7,7 +8,7 @@ import { redirect } from "next/navigation";
  * 
  * Try to get the user and if it can't then redirect
  */
-export function authenticate(failureRedirect = true) {
+export function authenticate(failureRedirect = true): User | undefined {
 	// Get token
 	const tokenCookie = cookies().get("token");
 	if(!tokenCookie) {
@@ -21,8 +22,10 @@ export function authenticate(failureRedirect = true) {
 	
 	// Decode token
 	const user = jwt.decode(jwtToken);
-	if(!user && failureRedirect) {
-		redirect("/auth/login");
+	if(!user) {
+		if(failureRedirect) {
+			redirect("/auth/login");
+		}
 	}
 	
 	return user;
