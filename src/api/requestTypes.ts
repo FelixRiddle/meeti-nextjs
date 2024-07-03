@@ -16,3 +16,4 @@ export const logout = () => {
 	// Clear on the server
 	return getRequest("/rest/user/auth/logout");
 }
+export const userOwnedGroups = () => getRequest("/rest/user/group/getAll");

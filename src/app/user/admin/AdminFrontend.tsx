@@ -1,7 +1,14 @@
+import { Group } from "@/types/Group";
+import Link from "next/link";
+
 /**
  * Admin frontend
  */
-export default function AdminFrontend() {
+export default function AdminFrontend({
+	userGroups
+}: {
+	userGroups: Array<Group> | undefined,
+}) {
 	return (
 		<div>
 			<main className="contenedor panel-administracion">
@@ -53,18 +60,32 @@ export default function AdminFrontend() {
 				<div className="seccion-admin">
 					<h2>Your groups</h2>
 					
-					<ul>
-						<li>
-							<div className="informacion-admin">
-								<h3>Blockchain and cryptocurrencies</h3>
-							</div>
-							<div className="acciones contenedor-bottones">
-								<a href="#" className="btn btn-verde">Edit</a>
-								<a href="#" className="btn btn-azul2">Image</a>
-								<a href="#" className="btn btn-rojo">Delete</a>
-							</div>
-						</li>
-					</ul>
+					{userGroups && userGroups.length > 0 && (
+						<ul>
+							{userGroups.map((group) => {
+								return (
+									<li>
+									<div className="informacion-admin">
+										<h3>{group.name}</h3>
+									</div>
+									<div className="acciones contenedor-bottones">
+										<a href="#" className="btn btn-verde">Edit</a>
+										<a href="#" className="btn btn-azul2">Image</a>
+										<a href="#" className="btn btn-rojo">Delete</a>
+									</div>
+									</li>
+								);
+							})}
+						</ul>
+					) || (
+						<div>
+							<p style={{display: "inline", marginRight: "3px"}}>You don't have any groups, 
+							</p>
+							<Link href="/user/group/new">
+								create one
+							</Link>
+						</div>
+					)}
 				</div>
 			</main>
 		</div>
