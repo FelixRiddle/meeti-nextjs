@@ -1,7 +1,12 @@
 "use client";
 
+import { createGroup } from "@/api/requestTypes";
+import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
+import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Category } from "@/types/Category";
+import { redirect } from "next/navigation";
+import { useRef, useState } from "react";
 
 /**
  * 
@@ -12,9 +17,36 @@ export default function NewGroupFrontend({
 	categories: Array<Category>,
 }) {
 	const url = apiUrl();
+	const form = useRef(null);
+	const [messages, setMessages] = useState([]);
+	
+	async function submitForm(e: any) {
+		e.preventDefault();
+		
+		if(!form) {
+			return;
+		}
+		
+		const formData = new FormData(form.current);
+		
+		const data = await createGroup(formData);
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
+		
+		const isSuccess = requestWasSuccessful(data);
+		
+		// Redirect to admin panel
+		if(isSuccess) {
+			location.href = "/user/admin";
+		}
+	}
 	
 	return (
 		<div>
+			<Messages messages={messages}/>
+			
 			<main className="contenedor contenedor-formulario no-padding">
 				<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
 				
@@ -22,7 +54,7 @@ export default function NewGroupFrontend({
 				
 				<h1>New group</h1>
 				
-				<form action={`${url}/user/group/new`} className="default-form" method="POST">
+				<form action={`${url}/user/group/new`} className="default-form" method="POST" ref={form}>
 					<div className="campo">
 						<label htmlFor="name">Name</label>
 						<input type="text" name="name" placeholder="Group name" />
@@ -50,7 +82,7 @@ export default function NewGroupFrontend({
 					
 					<div className="campo">
 						<label htmlFor="image">Image</label>
-						<input type="file" name="image" placeholder="Group image" />
+						<input type="file" name="image" placeholder="Group image" disabled={true} />
 					</div>
 					
 					<div className="campo">
@@ -59,7 +91,7 @@ export default function NewGroupFrontend({
 					</div>
 					
 					<div className="campo enviar">
-						<input type="submit" value="Create group" className="btn btn-rosa" />
+						<input type="submit" value="Create group" className="btn btn-rosa" onClick={submitForm} />
 					</div>
 				</form>
 			</main>

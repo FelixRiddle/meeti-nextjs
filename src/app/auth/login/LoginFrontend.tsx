@@ -2,7 +2,25 @@
 
 import loginRequest from "@/api/auth/loginRequest";
 import Messages from "@/components/Messages";
+import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
+
+/**
+ * Check if a request was successful
+ */
+export function requestWasSuccessful(responseData: any) {
+	if(!responseData) {
+		throw Error("Response data is required");
+	}
+	
+	for(const message of responseData.messages) {
+		if(message.error) {
+			return false;
+		}
+	}
+	
+	return true;
+}
 
 /**
  * Login page
@@ -24,6 +42,11 @@ export default function LoginFrontend() {
 		
 		if(data.messages) {
 			setMessages(data.messages);
+		}
+		
+		// Redirect to home
+		if(requestWasSuccessful(data)) {
+			location.href = "/";
 		}
 	}
 	

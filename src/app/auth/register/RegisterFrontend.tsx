@@ -3,6 +3,8 @@
 import { registerUser } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
 import { useRef, useState } from "react";
+import { requestWasSuccessful } from "../login/LoginFrontend";
+import { redirect } from "next/navigation";
 
 /**
  * Register frontend
@@ -26,6 +28,11 @@ export default function RegisterFrontend() {
 		
 		if(data.messages) {
 			setMessages(data.messages);
+		}
+		
+		// Redirect to login
+		if(requestWasSuccessful(data)) {
+			location.href = "/auth/login";
 		}
 	}
 	

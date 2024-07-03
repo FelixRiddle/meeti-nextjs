@@ -11,7 +11,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
 	const url = apiUrl();
-	const user = authenticate();
+	const user = authenticate(false);
 	
     return (
         <html lang="en">

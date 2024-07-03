@@ -14,8 +14,10 @@ export default async function loginRequest(formData: FormData) {
 		
 		const data = response.data;
 		
-		// Store cookie
-		cookies().set("token", data.token);
+		if(data.token) {
+			// Store cookie
+			cookies().set("token", data.token);
+		}
 		
 		return data;
 	} catch(err: any) {
