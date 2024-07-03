@@ -10,7 +10,9 @@ export default async function Admin() {
 	
 	// Get groups
 	const userGroupsResponse = await userOwnedGroups();
-	const userGroups = userGroupsResponse.groups;
+	
+	// Unwrap without throwing an error
+	const userGroups = userGroupsResponse?.groups;
 	
 	return (
 		<div>

@@ -1,19 +1,21 @@
 "use client";
 
-import { createGroup } from "@/api/requestTypes";
 import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Category } from "@/types/Category";
+import { Group } from "@/types/Group";
 import { useRef, useState } from "react";
 
 /**
- * 
+ * Edit page frontend
  */
-export default function NewGroupFrontend({
+export default function EditPageFrontend({
 	categories,
+	group
 }: {
 	categories: Array<Category>,
+	group: Group
 }) {
 	const url = apiUrl();
 	const form = useRef(null);
@@ -28,20 +30,20 @@ export default function NewGroupFrontend({
 		
 		const formData = new FormData(form.current);
 		
-		const data = await createGroup(formData);
+		// const data = await createGroup(formData);
 		
-		console.log(`Response: `, data);
+		// console.log(`Response: `, data);
 		
-		if(data.messages) {
-			setMessages(data.messages);
-		}
+		// if(data.messages) {
+		// 	setMessages(data.messages);
+		// }
 		
-		const isSuccess = requestWasSuccessful(data);
+		// const isSuccess = requestWasSuccessful(data);
 		
-		// Redirect to admin panel
-		if(isSuccess) {
-			location.href = "/user/admin";
-		}
+		// // Redirect to admin panel
+		// if(isSuccess) {
+		// 	location.href = "/user/admin";
+		// }
 	}
 	
 	return (
@@ -58,20 +60,20 @@ export default function NewGroupFrontend({
 				<form action={`${url}/user/group/new`} className="default-form" method="POST" ref={form}>
 					<div className="campo">
 						<label htmlFor="name">Name</label>
-						<input type="text" name="name" placeholder="Group name" />
+						<input type="text" name="name" placeholder="Group name" defaultValue={group.name} />
 					</div>
 					
 					<div className="campo descripcion">
 						<label htmlFor="description">Description</label>
 						<div className="contenedor-editor">
-							<input type="hidden" name="description" id="description" />
+							<input type="hidden" name="description" id="description" defaultValue={group.description} />
 							<trix-editor input="description"></trix-editor>
 						</div>
 					</div>
 					
 					<div className="campo">
 						<label htmlFor="category">Category</label>
-						<select name="category" id="category">
+						<select name="category" id="category" defaultValue={group.socialCategoryId}>
 							<option value="" defaultValue="">- Select one -</option>
 							{categories.map((category) => {
 								return (
@@ -82,13 +84,8 @@ export default function NewGroupFrontend({
 					</div>
 					
 					<div className="campo">
-						<label htmlFor="image">Image</label>
-						<input type="file" name="image" placeholder="Group image" />
-					</div>
-					
-					<div className="campo">
 						<label htmlFor="url">URL</label>
-						<input type="url" name="url" placeholder="Website" />
+						<input type="url" name="url" placeholder="Website" defaultValue={group.url} />
 					</div>
 					
 					<div className="campo enviar">

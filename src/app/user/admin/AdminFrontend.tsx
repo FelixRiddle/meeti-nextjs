@@ -64,15 +64,15 @@ export default function AdminFrontend({
 						<ul>
 							{userGroups.map((group) => {
 								return (
-									<li>
-									<div className="informacion-admin">
-										<h3>{group.name}</h3>
-									</div>
-									<div className="acciones contenedor-bottones">
-										<a href="#" className="btn btn-verde">Edit</a>
-										<a href="#" className="btn btn-azul2">Image</a>
-										<a href="#" className="btn btn-rojo">Delete</a>
-									</div>
+									<li key={group.id}>
+										<div className="informacion-admin">
+											<h3>{group.name}</h3>
+										</div>
+										<div className="acciones contenedor-bottones">
+											<a href={`/user/group/edit/${group.id}`} className="btn btn-verde">Edit</a>
+											<a href="#" className="btn btn-azul2">Image</a>
+											<a href="#" className="btn btn-rojo">Delete</a>
+										</div>
 									</li>
 								);
 							})}
