@@ -5,8 +5,9 @@ import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Category } from "@/types/Category";
-import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
+
+export const revalidte = 5;
 
 /**
  * 
@@ -30,6 +31,8 @@ export default function NewGroupFrontend({
 		const formData = new FormData(form.current);
 		
 		const data = await createGroup(formData);
+		
+		console.log(`Response: `, data);
 		
 		if(data.messages) {
 			setMessages(data.messages);
@@ -71,10 +74,10 @@ export default function NewGroupFrontend({
 					<div className="campo">
 						<label htmlFor="category">Category</label>
 						<select name="category" id="category">
-							<option value="" selected disabled>- Select one -</option>
+							<option value="" defaultValue="">- Select one -</option>
 							{categories.map((category) => {
 								return (
-									<option value={`${category.id}`}>{category.name}</option>
+									<option value={`${category.id}`} key={category.id}>{category.name}</option>
 								)
 							})}
 						</select>
@@ -82,7 +85,7 @@ export default function NewGroupFrontend({
 					
 					<div className="campo">
 						<label htmlFor="image">Image</label>
-						<input type="file" name="image" placeholder="Group image" disabled={true} />
+						<input type="file" name="image" placeholder="Group image" />
 					</div>
 					
 					<div className="campo">
