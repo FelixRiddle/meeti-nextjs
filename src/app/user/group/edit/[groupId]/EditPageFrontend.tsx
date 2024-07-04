@@ -1,5 +1,6 @@
 "use client";
 
+import { editGroup } from "@/api/requestTypes";
 import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
@@ -30,20 +31,24 @@ export default function EditPageFrontend({
 		
 		const formData = new FormData(form.current);
 		
-		// const data = await createGroup(formData);
+		const data = await editGroup(formData, group.id);
 		
-		// console.log(`Response: `, data);
+		console.log(`Response: `, data);
 		
-		// if(data.messages) {
-		// 	setMessages(data.messages);
-		// }
+		if(!data || typeof data === "string") {
+			return;
+		}
 		
-		// const isSuccess = requestWasSuccessful(data);
+		if(data.messages) {
+			setMessages(data.messages);
+		}
 		
-		// // Redirect to admin panel
-		// if(isSuccess) {
-		// 	location.href = "/user/admin";
-		// }
+		const isSuccess = requestWasSuccessful(data);
+		
+		// Redirect to admin panel
+		if(isSuccess) {
+			location.href = "/user/admin";
+		}
 	}
 	
 	return (
@@ -77,7 +82,7 @@ export default function EditPageFrontend({
 							<option value="" defaultValue="">- Select one -</option>
 							{categories.map((category) => {
 								return (
-									<option value={`${category.id}`} key={category.id}>{category.name}</option>
+									<option value={category.id} key={category.id}>{category.name}</option>
 								)
 							})}
 						</select>
@@ -89,7 +94,7 @@ export default function EditPageFrontend({
 					</div>
 					
 					<div className="campo enviar">
-						<input type="submit" value="Create group" className="btn btn-rosa" onClick={submitForm} />
+						<input type="submit" value="Save changes" className="btn btn-rosa" onClick={submitForm} />
 					</div>
 				</form>
 			</main>

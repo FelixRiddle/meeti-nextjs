@@ -9,6 +9,7 @@ import multipartRequest from "./lib/request/multipartRequest";
 
 // Register user
 export const registerUser = (data: FormData) => sendRequest('/rest/auth/register', data);
+export const editGroup = (data: FormData, id: string) => sendRequest(`/rest/user/group/edit/${id}`, data);
 
 // Get requests
 export const getCategories = () => getRequest("/rest/group/categories");

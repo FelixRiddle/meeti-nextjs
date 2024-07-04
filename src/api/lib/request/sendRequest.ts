@@ -8,6 +8,7 @@ import createAxiosInstance from "@/lib/createAxiosInstance";
 export default async function sendRequest(endpoint: string, formData: FormData) {
 	try {
 		const instance = createAxiosInstance();
+		console.log(`Endpoint: `, endpoint);
 		
 		const response = await instance.post(endpoint, formData);
 		
