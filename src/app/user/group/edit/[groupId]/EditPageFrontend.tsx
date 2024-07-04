@@ -33,8 +33,6 @@ export default function EditPageFrontend({
 		
 		const data = await editGroup(formData, group.id);
 		
-		console.log(`Response: `, data);
-		
 		if(!data || typeof data === "string") {
 			return;
 		}

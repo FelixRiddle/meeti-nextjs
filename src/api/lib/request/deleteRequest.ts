@@ -5,11 +5,11 @@ import createAxiosInstance from "@/lib/createAxiosInstance";
 /**
  * Seeing that behavior is many times similar, this is the generalization of sending a request.
  */
-export default async function sendRequest(endpoint: string, formData: FormData) {
+export default async function deleteRequest(endpoint: string) {
 	try {
 		const instance = createAxiosInstance();
 		
-		const response = await instance.post(endpoint, formData);
+		const response = await instance.delete(endpoint);
 		
 		const data = response.data;
 		

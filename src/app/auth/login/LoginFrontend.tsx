@@ -2,15 +2,14 @@
 
 import loginRequest from "@/api/auth/loginRequest";
 import Messages from "@/components/Messages";
-import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
 
 /**
  * Check if a request was successful
  */
 export function requestWasSuccessful(responseData: any) {
-	if(!responseData) {
-		throw Error("Response data is required");
+	if(!responseData || !responseData.messages) {
+		return false;
 	}
 	
 	for(const message of responseData.messages) {

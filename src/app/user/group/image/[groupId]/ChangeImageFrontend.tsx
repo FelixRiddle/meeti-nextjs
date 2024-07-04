@@ -32,8 +32,6 @@ export default function ChangeImageFrontend({
 		
 		const data = await updateGroupImage(formData, group.id);
 		
-		console.log(`Response: `, data);
-		
 		if(!data || typeof data === "string") {
 			return;
 		}

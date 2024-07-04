@@ -30,8 +30,6 @@ export default function NewGroupFrontend({
 		
 		const data = await createGroup(formData);
 		
-		console.log(`Response: `, data);
-		
 		if(data.messages) {
 			setMessages(data.messages);
 		}
