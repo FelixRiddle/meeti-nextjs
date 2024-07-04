@@ -23,7 +23,9 @@ export const logout = () => {
 export const userOwnedGroups = () => getRequest("/rest/user/group/getAll");
 // By id
 export const getGroupAndCategories = (groupId: string) => getRequest(`/rest/user/group/edit/${groupId}`);
+export const singleUserOwnedGroup = (groupId: string) => getRequest(`/rest/user/group/get/${groupId}`);
 
 // Multipart
 export const createGroup = (data: FormData) => multipartRequest("/rest/user/group/new", data);
+export const updateGroupImage = (data: FormData, groupId: string) => multipartRequest(`/rest/user/group/image/${groupId}`, data);
 

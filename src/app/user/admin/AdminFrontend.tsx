@@ -70,7 +70,7 @@ export default function AdminFrontend({
 										</div>
 										<div className="acciones contenedor-bottones">
 											<a href={`/user/group/edit/${group.id}`} className="btn btn-verde">Edit</a>
-											<a href="#" className="btn btn-azul2">Image</a>
+											<a href={`/user/group/image/${group.id}`} className="btn btn-azul2">Image</a>
 											<a href="#" className="btn btn-rojo">Delete</a>
 										</div>
 									</li>

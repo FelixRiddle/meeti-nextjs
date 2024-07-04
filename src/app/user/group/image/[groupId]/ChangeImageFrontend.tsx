@@ -1,0 +1,77 @@
+"use client";
+
+import { updateGroupImage } from "@/api/requestTypes";
+import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
+import apiUrl from "@/lib/config/apiUrl";
+import { Group } from "@/types/Group";
+import { useRef, useState } from "react";
+
+/**
+ * Change image
+ */
+export default function ChangeImageFrontend({
+	group
+}: {
+	group: Group
+}) {
+	const url = apiUrl();
+	const form = useRef(null);
+	const [messages, setMessages] = useState([]);
+	
+	async function submitForm(e: any) {
+		e.preventDefault();
+		
+		if(!form) {
+			return;
+		}
+		
+		const formData = new FormData(form.current);
+		
+		const data = await updateGroupImage(formData, group.id);
+		
+		console.log(`Response: `, data);
+		
+		if(!data || typeof data === "string") {
+			return;
+		}
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
+		
+		const isSuccess = requestWasSuccessful(data);
+		
+		// Redirect to admin panel
+		if(isSuccess) {
+			location.href = "/user/admin";
+		}
+	}
+	
+	return (
+		<div>
+			<main className="contenedor contenedor-formulario no-padding">
+				<h1>{group.name}</h1>
+				
+				<form className="default-form" method="POST" encType="multipart/form-data">
+					<div className="campo">
+						<label htmlFor="image">Image</label>
+						<input type="file" name="image" placeholder="Group image" />
+					</div>
+					
+					{group.image && (
+						<div className="campo">
+							<label htmlFor="">Current image</label>
+							<img src={`${url}/public/uploads/groups/${group.id}`} alt="Group image" width="400" />
+						</div>
+					) || (
+						<p>This group has no image</p>
+					)}
+					
+					<div className="campo enviar">
+						<input type="submit" value="Save changes" className="btn btn-rosa" />
+					</div>
+				</form>
+			</main>
+		</div>
+	);
+}
