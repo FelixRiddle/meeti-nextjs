@@ -1,13 +1,13 @@
 "use server";
 
-import { getGroupAndCategories } from "@/api/requestTypes";
+import { singleUserOwnedGroup } from "@/api/requestTypes";
+import DeleteFrontend from "./DeleteFrontend";
 import Messages from "@/components/Messages";
-import EditPageFrontend from "./EditPageFrontend";
 
 /**
- * Edit page
+ * 
  */
-export default async function EditPage({
+export default async function Delete({
 	params: {
 		groupId
 	}
@@ -16,10 +16,9 @@ export default async function EditPage({
 		groupId: string;
 	}
 }) {
-	const data = await getGroupAndCategories(groupId);
+	const data = await singleUserOwnedGroup(groupId);
 	
 	const messages = data.messages;
-	const categories = data.categories;
 	const group = data.group;
 	
 	return (
@@ -28,11 +27,8 @@ export default async function EditPage({
 				<Messages messages={messages} />
 			)}
 			
-			{group && categories && (
-				<EditPageFrontend
-					categories={categories}
-					group={group}
-				/>
+			{group && (
+				<DeleteFrontend group={group} />
 			) || (
 				<main className="contenedor">
 					<p>No group obtained from the server, either it doesn't exists, or you don't own it.</p>
