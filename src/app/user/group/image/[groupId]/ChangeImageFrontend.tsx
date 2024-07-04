@@ -65,7 +65,7 @@ export default function ChangeImageFrontend({
 				{group.image && (
 					<div className="campo">
 						<label htmlFor="">Current image</label>
-						<img src={`${url}/public/uploads/groups/${group.id}`} alt="Group image" width="400" />
+						<img src={`${url}/public/uploads/groups/${group.image}`} alt="Group image" width="400" />
 					</div>
 				) || (
 					<p>This group has no image</p>
