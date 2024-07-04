@@ -2,6 +2,7 @@
 
 import { updateGroupImage } from "@/api/requestTypes";
 import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
+import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
 import { useRef, useState } from "react";
@@ -20,6 +21,8 @@ export default function ChangeImageFrontend({
 	
 	async function submitForm(e: any) {
 		e.preventDefault();
+		
+		console.log(`Update image`);
 		
 		if(!form) {
 			return;
@@ -48,30 +51,30 @@ export default function ChangeImageFrontend({
 	}
 	
 	return (
-		<div>
-			<main className="contenedor contenedor-formulario no-padding">
-				<h1>{group.name}</h1>
+		<main className="contenedor contenedor-formulario no-padding">
+			<h1>{group.name}</h1>
+			
+			<Messages messages={messages} />
+			
+			<form className="default-form" method="POST" encType="multipart/form-data" ref={form}>
+				<div className="campo">
+					<label htmlFor="image">Image</label>
+					<input type="file" name="image" placeholder="Group image" />
+				</div>
 				
-				<form className="default-form" method="POST" encType="multipart/form-data">
+				{group.image && (
 					<div className="campo">
-						<label htmlFor="image">Image</label>
-						<input type="file" name="image" placeholder="Group image" />
+						<label htmlFor="">Current image</label>
+						<img src={`${url}/public/uploads/groups/${group.id}`} alt="Group image" width="400" />
 					</div>
-					
-					{group.image && (
-						<div className="campo">
-							<label htmlFor="">Current image</label>
-							<img src={`${url}/public/uploads/groups/${group.id}`} alt="Group image" width="400" />
-						</div>
-					) || (
-						<p>This group has no image</p>
-					)}
-					
-					<div className="campo enviar">
-						<input type="submit" value="Save changes" className="btn btn-rosa" />
-					</div>
-				</form>
-			</main>
-		</div>
+				) || (
+					<p>This group has no image</p>
+				)}
+				
+				<div className="campo enviar">
+					<input type="submit" value="Update image" className="btn btn-rosa" onClick={submitForm} />
+				</div>
+			</form>
+		</main>
 	);
 }
