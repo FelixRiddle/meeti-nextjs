@@ -20,8 +20,17 @@ export default async function ChangeImagePage({
 	// Get group
 	const data = await singleUserOwnedGroup(groupId);
 	
-	const messages = data.messages;
-	const group: Group | undefined = data.group;
+	let messages = undefined;
+	let group: Group | undefined = undefined;
+	if(!data) {
+		messages = [{
+			message: "Unexpected error, the server may be offline",
+			type: "error"
+		}];
+	} else {
+		messages = data.messages;
+		group = data.group;
+	}
 	
 	return (
 		<div>
