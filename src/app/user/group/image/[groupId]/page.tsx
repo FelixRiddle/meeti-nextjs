@@ -46,5 +46,5 @@ export default async function ChangeImagePage({
 				</main>
 			)}
 		</div>
-	)
+	);
 }

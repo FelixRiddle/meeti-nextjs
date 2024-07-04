@@ -1,11 +1,16 @@
 "use client";
 
 import apiUrl from "@/lib/config/apiUrl";
+import { Group } from "@/types/Group";
 
 /**
  * 
  */
-export default function CreateMeetiFrontend() {
+export default function CreateMeetiFrontend({
+	userGroups
+}: {
+	userGroups: Array<Group> | undefined,
+}) {
 	const url = apiUrl();
 	
 	return (
@@ -23,6 +28,11 @@ export default function CreateMeetiFrontend() {
 					<label htmlFor="group">Group</label>
 					<select name="groupId" id="groupId">
 						<option value="" disabled selected>-- Select a group --</option>
+						{userGroups && userGroups.map((group) => {
+							return (
+								<option value={group.id}>{group.name}</option>
+							);
+						})}
 					</select>
 				</div>
 				
