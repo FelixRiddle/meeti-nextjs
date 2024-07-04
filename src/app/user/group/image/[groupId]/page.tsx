@@ -32,9 +32,9 @@ export default async function ChangeImagePage({
 			{group && (
 				<ChangeImageFrontend group={group} />
 			) || (
-				<div>
+				<main className="contenedor">
 					<p>No group obtained from the server, either it doesn't exists, or you don't own it.</p>
-				</div>
+				</main>
 			)}
 		</div>
 	)
