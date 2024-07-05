@@ -1,7 +1,11 @@
 "use client";
 
+import Map from "@/components/Map";
+import MyMap from "@/components/MyMap";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
+import dynamic from "next/dynamic";
+import { useMemo } from "react";
 
 /**
  * 
@@ -16,8 +20,8 @@ export default function CreateMeetiFrontend({
 	return (
 		<main className="contenedor contenedor-formularios">
 			<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
-			
-			<script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></script>
+			<link rel="stylesheet" href={`${url}/public/package/leaflet@1.9.4/dist/leaflet.css`} />
+			<link rel="stylesheet" href={`${url}/public/css/routes/user/meeti/create.css`} />
 			
 			<h1>Create Meeti</h1>
 			
@@ -27,10 +31,10 @@ export default function CreateMeetiFrontend({
 				<div className="campo">
 					<label htmlFor="group">Group</label>
 					<select name="groupId" id="groupId">
-						<option value="" disabled selected>-- Select a group --</option>
+						<option value="" disabled={true} defaultValue="">-- Select a group --</option>
 						{userGroups && userGroups.map((group) => {
 							return (
-								<option value={group.id}>{group.name}</option>
+								<option value={group.id} key={group.id}>{group.name}</option>
 							);
 						})}
 					</select>
@@ -66,18 +70,24 @@ export default function CreateMeetiFrontend({
 					<label htmlFor="description">Description</label>
 					<div className="contenedor-editor">
 						<input type="hidden" name="description" id="description" placeholder="Description" />
-						<trix-editor input="description"></trix-editor>
+						{/* <trix-editor input="description"></trix-editor> */}
 					</div>
 				</div>
 				
+				{/* Location */}
 				<legend>Meeti location</legend>
 				<div className="campo buscador">
-					<label htmlFor="location">Search Meeti location</label>
+					<label>Search Meeti location</label>
 					<div className="contenedor-input">
-						<input type="text" name="location" id="location" placeholder="Location" />
+						<input type="text" id="browser" placeholder="Browse location" />
 						<small>An assitant will create an aproximate location</small>
 					</div>
 				</div>
+				
+				<div className="campo mapa">
+					<MyMap />
+				</div>
+				<p className="information">Move the pin to the location of the Meeti</p>
 				
 				<p className="informacion">Confirm that the location is correct</p>
 				<div className="campo">
@@ -109,6 +119,10 @@ export default function CreateMeetiFrontend({
 					<input type="submit" value="Create Meeti" className="btn btn-rosa" />
 				</div>
 			</form>
+			
+			<script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></script>
+			<script src={`${url}/public/package/leaflet@1.9.4/dist/leaflet.js`}></script>
+			<script src={`${url}/public/js/routes/user/meeti/create.js`}></script>
 		</main>
 	);
 }

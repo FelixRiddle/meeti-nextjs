@@ -23,8 +23,6 @@ export default async function CreateMeeti() {
 		groups = userGroupsResponse.groups;
 	}
 	
-	
-	
 	return (
 		<div>
 			{messages && (
