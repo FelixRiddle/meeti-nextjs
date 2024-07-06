@@ -13,7 +13,7 @@ export function requestWasSuccessful(responseData: any) {
 	}
 	
 	for(const message of responseData.messages) {
-		if(message.error) {
+		if(message.error || message.type === "error") {
 			return false;
 		}
 	}

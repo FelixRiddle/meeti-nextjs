@@ -1,6 +1,9 @@
 "use client";
 
+import { createMeeti } from "@/api/requestTypes";
+import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import FindPlaceMap from "@/components/Map/FindPlaceMap";
+import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
 import Script from "next/script";
@@ -25,7 +28,9 @@ export default function CreateMeetiFrontend({
 		state: "",
 		country: "",
 	});
+	const [messages, setMessages] = useState([]);
 	
+	const form = useRef(null);
 	const street = useRef(null);
 	const city = useRef(null);
 	const state = useRef(null);
@@ -35,11 +40,42 @@ export default function CreateMeetiFrontend({
 	
 	function updateMarkerCallback(coordinates: Array<number>, place: any) {
 		setCoordinates(coordinates);
-		setAddress(place);
+		setAddress({
+			...place,
+			street: place.street || place.road || "",
+		});
+	}
+	
+	/**
+	 * Create meeti
+	 */
+	async function submitForm(e: any) {
+		e.preventDefault();
+		
+		if(!form) {
+			return;
+		}
+		
+		const formData = new FormData(form.current);
+		
+		const data = await createMeeti(formData);
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
+		
+		const isSuccess = requestWasSuccessful(data);
+		
+		// Redirect to admin panel
+		if(isSuccess) {
+			location.href = "/user/admin";
+		}
 	}
 	
 	return (
 		<main className="contenedor contenedor-formularios">
+			<Messages messages={messages} />
+			
 			<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
 			<link rel="stylesheet" href={`${url}/public/css/routes/user/meeti/create.css`} />
 			
@@ -58,6 +94,16 @@ export default function CreateMeetiFrontend({
 				<legend>About Meeti</legend>
 				
 				<div className="campo">
+					<label htmlFor="title">Title</label>
+					<input type="text" name="title" id="title" placeholder="Meeti title" />
+				</div>
+				
+				<div className="campo">
+					<label htmlFor="featuring">Featuring</label>
+					<input type="text" name="featuring" id="featuring" placeholder="Featured person(Optional)" />
+				</div>
+				
+				<div className="campo">
 					<label htmlFor="group">Group</label>
 					<select name="groupId" id="groupId">
 						<option value="" disabled={true} defaultValue="">-- Select a group --</option>
@@ -67,16 +113,6 @@ export default function CreateMeetiFrontend({
 							);
 						})}
 					</select>
-				</div>
-				
-				<div className="campo">
-					<label htmlFor="title">Title</label>
-					<input type="text" name="title" id="title" placeholder="Meeti title" />
-				</div>
-				
-				<div className="campo">
-					<label htmlFor="featuring">Featuring</label>
-					<input type="text" name="featuring" id="featuring" placeholder="Featured person(Optional)" />
 				</div>
 				
 				<div className="columnas-2 grid">
@@ -121,11 +157,25 @@ export default function CreateMeetiFrontend({
 				<p className="informacion">Confirm that the location is correct</p>
 				<div className="campo">
 					<label htmlFor="street">Street</label>
-					<input type="text" name="street" id="street" placeholder="Street" ref={street} />
+					<input
+						type="text"
+						name="street"
+						id="street"
+						placeholder="Street"
+						ref={street}
+						value={address.street}
+					/>
 				</div>
 				<div className="campo">
 					<label htmlFor="city">City</label>
-					<input type="text" name="city" id="city" placeholder="City" ref={city} />
+					<input
+						type="text"
+						name="city"
+						id="city"
+						placeholder="City"
+						ref={city}
+						value={address.city}
+					/>
 				</div>
 				<div className="campo">
 					<label htmlFor="state">State/Province</label>
@@ -135,6 +185,7 @@ export default function CreateMeetiFrontend({
 						id="state"
 						placeholder="State/Province"
 						ref={state}
+						value={address.state}
 					/>
 				</div>
 				<div className="campo">
@@ -145,6 +196,7 @@ export default function CreateMeetiFrontend({
 						id="country"
 						placeholder="Country"
 						ref={country}
+						value={address.country}
 					/>
 				</div>
 				
@@ -154,6 +206,7 @@ export default function CreateMeetiFrontend({
 					id="latitude"
 					placeholder="Latitude"
 					ref={latitude}
+					value={coordinates.lat}
 				/>
 				<input
 					type="hidden"
@@ -161,18 +214,18 @@ export default function CreateMeetiFrontend({
 					id="longitude"
 					placeholder="Longitude"
 					ref={longitude}
+					value={coordinates.lng}
 				/>
 				
 				<div className="campo enviar">
-					<input type="submit" value="Create Meeti" className="btn btn-rosa" />
+					<input
+						type="submit"
+						value="Create Meeti"
+						className="btn btn-rosa"
+						onSubmit={submitForm}
+					/>
 				</div>
 			</form>
-			
-			{/* <Script src={`${url}/public/js/routes/user/meeti/create.js`}
-				onError={(e: Error) => {
-					console.error('Script failed to load', e)
-				}}
-			></Script> */}
 		</main>
 	);
 }
