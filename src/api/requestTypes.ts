@@ -22,11 +22,15 @@ export const userOwnedGroups = () => getRequest("/rest/user/group/getAll");
 export const getGroupAndCategories = (groupId: string) => getRequest(`/rest/user/group/edit/${groupId}`);
 export const singleUserOwnedGroup = (groupId: string) => getRequest(`/rest/user/group/get/${groupId}`);
 export const userAdmin = () => getRequest(`/rest/user/admin`);
+export const getEditMeeti = (meetiId: number) => getRequest(`/rest/user/meeti/edit/${meetiId}`);
 
 // Post requests
 export const registerUser = (data: FormData) => sendRequest('/rest/auth/register', data);
 export const editGroup = (data: FormData, id: string) => sendRequest(`/rest/user/group/edit/${id}`, data);
 export const createMeeti = (data: FormData) => sendRequest(`/rest/user/meeti/create`, data);
+export const editMeeti = (
+	data: FormData, meetiId: number
+) => sendRequest(`/rest/user/meeti/edit/${meetiId}`, data);
 
 // Multipart
 export const createGroup = (data: FormData) => multipartRequest("/rest/user/group/new", data);

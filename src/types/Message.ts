@@ -4,6 +4,6 @@
  */
 export default interface Message {
 	message: string;
-	error: boolean;
+	error?: boolean;
 	type?: string;
 }
