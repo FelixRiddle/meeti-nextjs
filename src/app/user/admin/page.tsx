@@ -28,7 +28,8 @@ export default async function Admin() {
 	}
 	
 	const groups = adminResponse.groups;
-	const meetis = adminResponse.meetis;
+	const futureMeetis = adminResponse.futureMeetis;
+	const pastMeetis = adminResponse.pastMeetis;
 	
 	return (
 		<div>
@@ -36,7 +37,11 @@ export default async function Admin() {
 				<Messages messages={messages} />
 			)}
 			
-			<AdminFrontend userGroups={groups} meetis={meetis} />
+			<AdminFrontend
+				userGroups={groups}
+				futureMeetis={futureMeetis}
+				pastMeetis={pastMeetis}
+			/>
 		</div>
 	)
 }

@@ -8,10 +8,12 @@ import MeetiRowView from "./MeetiRowView";
  */
 export default function AdminFrontend({
 	userGroups,
-	meetis,
+	futureMeetis,
+	pastMeetis
 }: {
 	userGroups: Array<Group> | undefined,
-	meetis: Array<Meeti> | undefined,
+	futureMeetis: Array<Meeti> | undefined,
+	pastMeetis: Array<Meeti> | undefined,
 }) {
 	return (
 		<div>
@@ -27,11 +29,12 @@ export default function AdminFrontend({
 					<a href="/user/profile/image/edit" className="btn btn-verde">Change pfp</a>
 				</div>
 				
+				{/* Future meetis */}
 				<div className="seccion-admin">
-					<h2>Your Meeti's</h2>
-						{meetis ? (
+					<h2>Your future Meeti's</h2>
+						{futureMeetis ? (
 							<ul>
-								{meetis.map((meeti) => {
+								{futureMeetis.map((meeti) => {
 									return (
 										<MeetiRowView
 											meeti={meeti}
@@ -40,7 +43,7 @@ export default function AdminFrontend({
 								})}
 							</ul>
 						) : (
-							<p>You haven't created any meeti</p>
+							<p>There are no Meeti's in this section</p>
 						)}
 				</div>
 				
@@ -73,6 +76,25 @@ export default function AdminFrontend({
 							</Link>
 						</div>
 					)}
+				</div>
+				
+				{/* Past meetis */}
+				<div className="seccion-admin">
+					<h2>Your past Meeti's</h2>
+						{pastMeetis ? (
+							<ul>
+								{pastMeetis.map((meeti) => {
+									return (
+										<MeetiRowView
+											isFuture={false}
+											meeti={meeti}
+										/>
+									);
+								})}
+							</ul>
+						) : (
+							<p>There are no Meeti's in this section</p>
+						)}
 				</div>
 			</main>
 		</div>

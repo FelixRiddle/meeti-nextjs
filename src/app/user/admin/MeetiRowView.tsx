@@ -2,8 +2,10 @@ import Meeti from "@/types/Meeti";
 import moment from "moment";
 
 export default function MeetiRowView({
+	isFuture = true,
 	meeti,
 }: {
+	isFuture?: boolean,
 	meeti: Meeti,
 }) {
 	return (
@@ -13,7 +15,7 @@ export default function MeetiRowView({
 					{moment(`${meeti.date} ${meeti.time}`).format("LLLL")}
 				</p>
 				<h3>{meeti.title}</h3>
-				<small>{meeti.participants?.length} going</small>
+				<small>{meeti.participants?.length} {isFuture ? "going" : "people went"}</small>
 			</div>
 			<div className="acciones contenedor-bottones">
 				<a href={`/user/meeti/edit/${meeti.id}`} className="btn btn-verde">Edit</a>
