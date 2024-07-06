@@ -1,11 +1,10 @@
 "use client";
 
-import MyMap from "@/components/Map/Map";
+import FindPlaceMap from "@/components/Map/FindPlaceMap";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
-import dynamic from "next/dynamic";
 import Script from "next/script";
-import { useMemo } from "react";
+import { useRef, useState } from "react";
 
 /**
  * 
@@ -16,13 +15,28 @@ export default function CreateMeetiFrontend({
 	userGroups: Array<Group> | undefined,
 }) {
 	const url = apiUrl();
-	// const Map = useMemo(() => dynamic(
-	//   () => import('@/components/Maps/MyMap'),
-	//   { 
-	// 	loading: () => <p>A map is loading</p>,
-	// 	ssr: false
-	//   }
-	// ), [])
+	const [coordinates, setCoordinates] = useState([
+		51.505,
+		-0.09,
+	]);
+	const [address, setAddress] = useState({
+		street: "",
+		city: "",
+		state: "",
+		country: "",
+	});
+	
+	const street = useRef(null);
+	const city = useRef(null);
+	const state = useRef(null);
+	const country = useRef(null);
+	const latitude = useRef(null);
+	const longitude = useRef(null);
+	
+	function updateMarkerCallback(coordinates: Array<number>, place: any) {
+		setCoordinates(coordinates);
+		setAddress(place);
+	}
 	
 	return (
 		<main className="contenedor contenedor-formularios">
@@ -37,17 +51,6 @@ export default function CreateMeetiFrontend({
 				href={`${url}/public/package/leaflet-geosearch@4.0.0/dist/geosearch.css`}
 			/>
 			<link rel="stylesheet" href={`${url}/public/package/leaflet@1.9.4/dist/leaflet.css`} />
-			<Script
-				src={`${url}/public/package/leaflet@1.9.4/dist/leaflet.js`}
-				onError={(e: Error) => {
-					console.error('Script failed to load', e)
-				}}
-			></Script>
-			<Script src={`${url}/public/package/leaflet-geosearch@4.0.0/dist/geosearch.js`}
-				onError={(e: Error) => {
-					console.error('Script failed to load', e)
-				}}
-			></Script>
 			
 			<h1>Create Meeti</h1>
 			
@@ -105,43 +108,60 @@ export default function CreateMeetiFrontend({
 				<p className="information">Move the pin to the location of the Meeti</p>
 				
 				<div className="campo mapa">
-					{/* <div
-						className="mapa" id="map"
-					></div> */}
-					<MyMap
+					<FindPlaceMap
 						zoom={13}
 						position={{
-							lat: 51.505,
-							lng: -0.09,
+							lat: coordinates[0],
+							lng: coordinates[1],
 						}}
+						updateCallback={updateMarkerCallback}
 					/>
 				</div>
 		
 				<p className="informacion">Confirm that the location is correct</p>
 				<div className="campo">
 					<label htmlFor="street">Street</label>
-					<input type="text" name="street" id="street" placeholder="Street" />
+					<input type="text" name="street" id="street" placeholder="Street" ref={street} />
 				</div>
 				<div className="campo">
 					<label htmlFor="city">City</label>
-					<input type="text" name="city" id="city" placeholder="City" />
+					<input type="text" name="city" id="city" placeholder="City" ref={city} />
 				</div>
 				<div className="campo">
 					<label htmlFor="state">State/Province</label>
-					<input type="text" name="state" id="state" placeholder="State/Province" />
+					<input
+						type="text"
+						name="state"
+						id="state"
+						placeholder="State/Province"
+						ref={state}
+					/>
 				</div>
 				<div className="campo">
 					<label htmlFor="country">Country</label>
-					<input type="text" name="country" id="country" placeholder="Country" />
+					<input
+						type="text"
+						name="country"
+						id="country"
+						placeholder="Country"
+						ref={country}
+					/>
 				</div>
-				<div className="campo">
-					<label htmlFor="latitude">Latitude</label>
-					<input type="text" name="latitude" id="latitude" placeholder="Latitude" />
-				</div>
-				<div className="campo">
-					<label htmlFor="longitude">Longitude</label>
-					<input type="text" name="longitude" id="longitude" placeholder="Longitude" />
-				</div>
+				
+				<input
+					type="hidden"
+					name="latitude"
+					id="latitude"
+					placeholder="Latitude"
+					ref={latitude}
+				/>
+				<input
+					type="hidden"
+					name="longitude"
+					id="longitude"
+					placeholder="Longitude"
+					ref={longitude}
+				/>
 				
 				<div className="campo enviar">
 					<input type="submit" value="Create Meeti" className="btn btn-rosa" />
