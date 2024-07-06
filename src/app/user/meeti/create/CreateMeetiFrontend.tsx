@@ -90,7 +90,7 @@ export default function CreateMeetiFrontend({
 			
 			<h1>Create Meeti</h1>
 			
-			<form className="default-form" method="POST">
+			<form className="default-form" method="POST" ref={form}>
 				<legend>About Meeti</legend>
 				
 				<div className="campo">
@@ -206,7 +206,7 @@ export default function CreateMeetiFrontend({
 					id="latitude"
 					placeholder="Latitude"
 					ref={latitude}
-					value={coordinates.lat}
+					value={coordinates[0]}
 				/>
 				<input
 					type="hidden"
@@ -214,7 +214,7 @@ export default function CreateMeetiFrontend({
 					id="longitude"
 					placeholder="Longitude"
 					ref={longitude}
-					value={coordinates.lng}
+					value={coordinates[1]}
 				/>
 				
 				<div className="campo enviar">
@@ -222,7 +222,7 @@ export default function CreateMeetiFrontend({
 						type="submit"
 						value="Create Meeti"
 						className="btn btn-rosa"
-						onSubmit={submitForm}
+						onClick={submitForm}
 					/>
 				</div>
 			</form>

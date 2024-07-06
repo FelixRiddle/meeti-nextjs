@@ -29,7 +29,9 @@ export const createMeeti = (data: FormData) => sendRequest(`/rest/user/meeti/cre
 
 // Multipart
 export const createGroup = (data: FormData) => multipartRequest("/rest/user/group/new", data);
-export const updateGroupImage = (data: FormData, groupId: string) => multipartRequest(`/rest/user/group/image/${groupId}`, data);
+export const updateGroupImage = (
+	data: FormData, groupId: string
+) => multipartRequest(`/rest/user/group/image/${groupId}`, data);
 
 // Delete requests
 export const deleteUserGroup = (groupId: string) => deleteRequest(`/rest/user/group/delete/${groupId}`);
