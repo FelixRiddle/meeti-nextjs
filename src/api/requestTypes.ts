@@ -21,6 +21,7 @@ export const userOwnedGroups = () => getRequest("/rest/user/group/getAll");
 // By id
 export const getGroupAndCategories = (groupId: string) => getRequest(`/rest/user/group/edit/${groupId}`);
 export const singleUserOwnedGroup = (groupId: string) => getRequest(`/rest/user/group/get/${groupId}`);
+export const userAdmin = () => getRequest(`/rest/user/admin`);
 
 // Post requests
 export const registerUser = (data: FormData) => sendRequest('/rest/auth/register', data);

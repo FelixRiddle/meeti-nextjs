@@ -1,13 +1,17 @@
 import { Group } from "@/types/Group";
+import Meeti from "@/types/Meeti";
 import Link from "next/link";
+import MeetiRowView from "./MeetiRowView";
 
 /**
  * Admin frontend
  */
 export default function AdminFrontend({
-	userGroups
+	userGroups,
+	meetis,
 }: {
 	userGroups: Array<Group> | undefined,
+	meetis: Array<Meeti> | undefined,
 }) {
 	return (
 		<div>
@@ -25,36 +29,19 @@ export default function AdminFrontend({
 				
 				<div className="seccion-admin">
 					<h2>Your Meeti's</h2>
-					<ul>
-						<li>
-							<div className="informacion-admin">
-								<p className="fecha">
-									Tuesday, 2 July 2024
-								</p>
-								<h3>E-Commerce Argentina</h3>
-								<small>23 going</small>
-							</div>
-							<div className="acciones contenedor-bottones">
-								<a href="#" className="btn btn-verde">Edit</a>
-								<a href="#" className="btn btn-azul2">People list</a>
-								<a href="#" className="btn btn-rojo">Delete</a>
-							</div>
-						</li>
-						<li>
-							<div className="informacion-admin">
-								<p className="fecha">
-									Tuesday, 12 July 2024
-								</p>
-								<h3>Blockchain and cryptocurrencies</h3>
-								<small>3 going</small>
-							</div>
-							<div className="acciones contenedor-bottones">
-								<a href="#" className="btn btn-verde">Edit</a>
-								<a href="#" className="btn btn-azul2">People list</a>
-								<a href="#" className="btn btn-rojo">Delete</a>
-							</div>
-						</li>
-					</ul>
+						{meetis ? (
+							<ul>
+								{meetis.map((meeti) => {
+									return (
+										<MeetiRowView
+											meeti={meeti}
+										/>
+									);
+								})}
+							</ul>
+						) : (
+							<p>You haven't created any meeti</p>
+						)}
 				</div>
 				
 				<div className="seccion-admin">
