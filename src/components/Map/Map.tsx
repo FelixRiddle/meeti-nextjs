@@ -1,22 +1,35 @@
-import dynamic from 'next/dynamic';
+// src/components/Map.tsx
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
+import "leaflet/dist/leaflet.css"
+import "leaflet-defaulticon-compatibility"
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 
-const DynamicMap = dynamic(() => import('./DynamicMap'), {
-	ssr: false
-});
-
-// Set default sizing to control aspect ratio which will scale responsively
-// but also help avoid layout shift
-
-const DEFAULT_WIDTH = 600;
-const DEFAULT_HEIGHT = 600;
-
-const Map = (props: any) => {
-	const { width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT } = props;
+export default function MyMap({
+	position,
+	zoom,
+	size = { width: 1024, height: 768 },
+}:{
+	position: {
+		lat: number,
+		lng: number,
+	},
+	size?: {
+		width: number,
+		height: number,
+	},
+	zoom: number,
+}) {
 	return (
-		<div style={{ aspectRatio: width / height }}>
-		<DynamicMap {...props} />
-		</div>
-	)
+		<MapContainer center={position} zoom={zoom} scrollWheelZoom={false} style={size}>
+			<TileLayer
+			attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+			url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+			/>
+			<Marker position={position}>
+				<Popup>
+					A pretty CSS3 popup. <br /> Easily customizable.
+				</Popup>
+			</Marker>
+		</MapContainer>
+	);
 }
-
-export default Map;

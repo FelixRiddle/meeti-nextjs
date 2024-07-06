@@ -1,10 +1,10 @@
 "use client";
 
-import Map from "@/components/Map";
-import MyMap from "@/components/MyMap";
+import MyMap from "@/components/Map/Map";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
 import dynamic from "next/dynamic";
+import Script from "next/script";
 import { useMemo } from "react";
 
 /**
@@ -16,12 +16,38 @@ export default function CreateMeetiFrontend({
 	userGroups: Array<Group> | undefined,
 }) {
 	const url = apiUrl();
+	// const Map = useMemo(() => dynamic(
+	//   () => import('@/components/Maps/MyMap'),
+	//   { 
+	// 	loading: () => <p>A map is loading</p>,
+	// 	ssr: false
+	//   }
+	// ), [])
 	
 	return (
 		<main className="contenedor contenedor-formularios">
 			<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
-			<link rel="stylesheet" href={`${url}/public/package/leaflet@1.9.4/dist/leaflet.css`} />
 			<link rel="stylesheet" href={`${url}/public/css/routes/user/meeti/create.css`} />
+			
+			<Script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></Script>
+			
+			{/* Leaflet */}
+			<link
+				rel="stylesheet"
+				href={`${url}/public/package/leaflet-geosearch@4.0.0/dist/geosearch.css`}
+			/>
+			<link rel="stylesheet" href={`${url}/public/package/leaflet@1.9.4/dist/leaflet.css`} />
+			<Script
+				src={`${url}/public/package/leaflet@1.9.4/dist/leaflet.js`}
+				onError={(e: Error) => {
+					console.error('Script failed to load', e)
+				}}
+			></Script>
+			<Script src={`${url}/public/package/leaflet-geosearch@4.0.0/dist/geosearch.js`}
+				onError={(e: Error) => {
+					console.error('Script failed to load', e)
+				}}
+			></Script>
 			
 			<h1>Create Meeti</h1>
 			
@@ -70,25 +96,27 @@ export default function CreateMeetiFrontend({
 					<label htmlFor="description">Description</label>
 					<div className="contenedor-editor">
 						<input type="hidden" name="description" id="description" placeholder="Description" />
-						{/* <trix-editor input="description"></trix-editor> */}
+						<trix-editor input="description"></trix-editor>
 					</div>
 				</div>
 				
 				{/* Location */}
 				<legend>Meeti location</legend>
-				<div className="campo buscador">
-					<label>Search Meeti location</label>
-					<div className="contenedor-input">
-						<input type="text" id="browser" placeholder="Browse location" />
-						<small>An assitant will create an aproximate location</small>
-					</div>
-				</div>
-				
-				<div className="campo mapa">
-					<MyMap />
-				</div>
 				<p className="information">Move the pin to the location of the Meeti</p>
 				
+				<div className="campo mapa">
+					{/* <div
+						className="mapa" id="map"
+					></div> */}
+					<MyMap
+						zoom={13}
+						position={{
+							lat: 51.505,
+							lng: -0.09,
+						}}
+					/>
+				</div>
+		
 				<p className="informacion">Confirm that the location is correct</p>
 				<div className="campo">
 					<label htmlFor="street">Street</label>
@@ -120,9 +148,11 @@ export default function CreateMeetiFrontend({
 				</div>
 			</form>
 			
-			<script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></script>
-			<script src={`${url}/public/package/leaflet@1.9.4/dist/leaflet.js`}></script>
-			<script src={`${url}/public/js/routes/user/meeti/create.js`}></script>
+			{/* <Script src={`${url}/public/js/routes/user/meeti/create.js`}
+				onError={(e: Error) => {
+					console.error('Script failed to load', e)
+				}}
+			></Script> */}
 		</main>
 	);
 }
