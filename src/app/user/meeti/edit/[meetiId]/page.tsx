@@ -41,7 +41,7 @@ export default async function EditMeeti({
 			<main className="contenedor">
 				<EditMeetiFailedFrontend messages={messages} />
 			</main>
-		)
+		);
 	}
 	
 	return (

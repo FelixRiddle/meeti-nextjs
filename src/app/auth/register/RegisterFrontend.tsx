@@ -60,16 +60,33 @@ export default function RegisterFrontend() {
 					
 					<div className="campo">
 						<label htmlFor="password">Password</label>
-						<input type="password" id="password" name="password" placeholder="Password" required />
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Password"
+							required
+						/>
 					</div>
 					
 					<div className="campo">
 						<label htmlFor="confirmPassword">Confirm password</label>
-						<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required />
+						<input
+							type="password"
+							id="confirmPassword"
+							name="confirmPassword"
+							placeholder="Confirm password"
+							required
+						/>
 					</div>
 					
 					<div className="campo">
-						<input type="submit" value="Create account" className="btn btn-rosa" onClick={submitForm}/>
+						<input
+							type="submit"
+							value="Create account"
+							className="btn btn-rosa"
+							onClick={submitForm}
+						/>
 					</div>
 				</form>
 			</main>

@@ -32,7 +32,7 @@ export default function AdminFrontend({
 				{/* Future meetis */}
 				<div className="seccion-admin">
 					<h2>Your future Meeti's</h2>
-						{futureMeetis ? (
+						{futureMeetis && futureMeetis.length > 0 ? (
 							<ul>
 								{futureMeetis.map((meeti) => {
 									return (
@@ -81,7 +81,7 @@ export default function AdminFrontend({
 				{/* Past meetis */}
 				<div className="seccion-admin">
 					<h2>Your past Meeti's</h2>
-						{pastMeetis ? (
+						{pastMeetis && pastMeetis.length > 0 ? (
 							<ul>
 								{pastMeetis.map((meeti) => {
 									return (

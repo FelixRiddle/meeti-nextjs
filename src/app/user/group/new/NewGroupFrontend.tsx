@@ -1,11 +1,13 @@
 "use client";
 
+import Script from "next/script";
+import { useRef, useState } from "react";
+
 import { createGroup } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { requestWasSuccessful } from "@/lib/status";
 import { Category } from "@/types/Category";
-import { useRef, useState } from "react";
 
 /**
  * 
@@ -49,7 +51,7 @@ export default function NewGroupFrontend({
 			<main className="contenedor contenedor-formulario no-padding">
 				<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
 				
-				<script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></script>
+				<Script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></Script>
 				
 				<h1>New group</h1>
 				
@@ -73,8 +75,11 @@ export default function NewGroupFrontend({
 							<option value="" defaultValue="">- Select one -</option>
 							{categories.map((category) => {
 								return (
-									<option value={`${category.id}`} key={category.id}>{category.name}</option>
-								)
+									<option
+										value={`${category.id}`}
+										key={category.id}
+									>{category.name}</option>
+								);
 							})}
 						</select>
 					</div>
@@ -90,7 +95,12 @@ export default function NewGroupFrontend({
 					</div>
 					
 					<div className="campo enviar">
-						<input type="submit" value="Create group" className="btn btn-rosa" onClick={submitForm} />
+						<input
+							type="submit"
+							value="Create group"
+							className="btn btn-rosa"
+							onClick={submitForm}
+						/>
 					</div>
 				</form>
 			</main>
