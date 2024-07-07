@@ -1,6 +1,5 @@
 "use server"
 
-import { notAuthenticated } from "@/lib/auth/authenticate";
 import LoginFrontend from "./LoginFrontend";
 
 /**

@@ -7,3 +7,5 @@ export default interface Message {
 	error?: boolean;
 	type?: string;
 }
+
+export type Messages = Array<Message>;

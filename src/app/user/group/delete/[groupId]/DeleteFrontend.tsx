@@ -1,8 +1,8 @@
 "use client";
 
 import { deleteUserGroup } from "@/api/requestTypes";
-import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import Messages from "@/components/Messages";
+import { requestWasSuccessful } from "@/lib/status";
 import { Group } from "@/types/Group";
 import { useState } from "react";
 

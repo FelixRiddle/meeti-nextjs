@@ -1,10 +1,10 @@
 "use client";
 
+import { useRef, useState } from "react";
+
 import { registerUser } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
-import { useRef, useState } from "react";
-import { requestWasSuccessful } from "../login/LoginFrontend";
-import { redirect } from "next/navigation";
+import { requestWasSuccessful } from "@/lib/status";
 
 /**
  * Register frontend

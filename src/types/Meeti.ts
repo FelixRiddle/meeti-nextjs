@@ -13,4 +13,7 @@ export default interface Meeti {
 	time: Date;
 	slug: string;
 	participants?: Array<User>;
+	userId: number;
+	groupId: string;
+	addressId: number;
 }

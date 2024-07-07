@@ -1,6 +1,6 @@
 "use server";
 
-import { userAdmin, userOwnedGroups } from "@/api/requestTypes";
+import { userAdmin } from "@/api/requestTypes";
 import AdminFrontend from "./AdminFrontend";
 import Messages from "@/components/Messages";
 
@@ -8,13 +8,6 @@ import Messages from "@/components/Messages";
  * 
  */
 export default async function Admin() {
-	
-	// // Get groups
-	// const userGroupsResponse = await userOwnedGroups();
-	
-	// // Unwrap without throwing an error
-	// const userGroups = userGroupsResponse?.groups;
-	
 	const adminResponse = await userAdmin();
 	
 	let messages = undefined;

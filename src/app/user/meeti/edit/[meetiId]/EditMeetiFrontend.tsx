@@ -3,13 +3,14 @@
 import Script from "next/script";
 import { useRef, useState } from "react";
 
-import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import FindPlaceMap from "@/components/Map/FindPlaceMap";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import { Group } from "@/types/Group";
 import Meeti from "@/types/Meeti";
 import { editMeeti } from "@/api/requestTypes";
+import moment from "moment";
+import { requestWasSuccessful } from "@/lib/status";
 
 /**
  * 
@@ -76,6 +77,9 @@ export default function EditMeetiFrontend({
 		}
 	}
 	
+	console.log(`Date: `, moment(meeti.date).format("YYYY-MM-DD"));
+	console.log(`Time: `, moment(meeti.time).format("hh:mm"));
+	
 	return (
 		<main className="contenedor contenedor-formularios">
 			<Messages messages={messages} />
@@ -99,18 +103,35 @@ export default function EditMeetiFrontend({
 				
 				<div className="campo">
 					<label htmlFor="title">Title</label>
-					<input type="text" name="title" id="title" placeholder="Meeti title" />
+					<input
+						type="text"
+						name="title"
+						id="title"
+						placeholder="Meeti title"
+						value={meeti.title}
+					/>
 				</div>
 				
 				<div className="campo">
 					<label htmlFor="featuring">Featuring</label>
-					<input type="text" name="featuring" id="featuring" placeholder="Featured person(Optional)" />
+					<input
+						type="text"
+						name="featuring"
+						id="featuring"
+						placeholder="Featured person(Optional)"
+						value={meeti.featuring}
+					/>
 				</div>
 				
 				<div className="campo">
 					<label htmlFor="group">Group</label>
-					<select name="groupId" id="groupId">
-						<option value="" disabled={true} defaultValue="">-- Select a group --</option>
+					<select name="groupId" id="groupId" defaultValue={meeti.groupId}>
+						<option
+							value=""
+							disabled={true}
+							defaultValue=""
+						>-- Select a group --</option>
+						{/* Groups */}
 						{groups && groups.map((group) => {
 							return (
 								<option value={group.id} key={group.id}>{group.name}</option>
@@ -122,11 +143,22 @@ export default function EditMeetiFrontend({
 				<div className="columnas-2 grid">
 					<div className="campo">
 						<label htmlFor="date">Date</label>
-						<input type="date" name="date" id="date" placeholder="Meeti date" />
+						<input
+							type="date"
+							name="date"
+							id="date"
+							placeholder="Meeti date"
+							defaultValue={moment(meeti.date).format("YYYY-MM-DD")}
+						/>
 					</div>
 					<div className="campo">
 						<label htmlFor="time">Time</label>
-						<input type="time" name="time" placeholder="Meeti time" />
+						<input
+							type="time"
+							name="time"
+							placeholder="Meeti time"
+							defaultValue={moment(meeti.time).format("hh:mm")}
+						/>
 					</div>
 				</div>
 				

@@ -1,9 +1,9 @@
 "use client";
 
 import { editGroup } from "@/api/requestTypes";
-import { requestWasSuccessful } from "@/app/auth/login/LoginFrontend";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
+import { requestWasSuccessful } from "@/lib/status";
 import { Category } from "@/types/Category";
 import { Group } from "@/types/Group";
 import { useRef, useState } from "react";
