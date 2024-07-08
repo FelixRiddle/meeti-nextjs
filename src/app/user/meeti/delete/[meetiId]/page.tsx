@@ -23,7 +23,6 @@ export default async function DeletePage({
 	// Check if it's successful
 	const isSuccess = requestWasSuccessful(editMeetiResponse);
 	if(!isSuccess) {
-		// console.log(`Request not successful`);
 		const messages = [{
 			message: "Couldn't fetch meeti data, maybe the server is offline",
 			type: "error"
@@ -37,7 +36,6 @@ export default async function DeletePage({
 	}
 	
 	const meeti: Meeti = editMeetiResponse.meeti;
-	
 	if(!meeti) {
 		const messages = [{
 			message: "Couldn't fetch meeti data, maybe the server is offline",
