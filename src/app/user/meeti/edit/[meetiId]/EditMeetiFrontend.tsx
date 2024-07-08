@@ -77,8 +77,9 @@ export default function EditMeetiFrontend({
 		}
 	}
 	
-	console.log(`Date: `, moment(meeti.date).format("YYYY-MM-DD"));
-	console.log(`Time: `, moment(meeti.time).format("hh:mm"));
+	// console.log(`Date: `, moment(meeti.date).format("YYYY-MM-DD"));
+	// console.log(`Time of the meeti: `, meeti.time);
+	// console.log(`Time: `, moment(meeti.time).format("hh:mm"));
 	
 	return (
 		<main className="contenedor contenedor-formularios">
@@ -157,7 +158,7 @@ export default function EditMeetiFrontend({
 							type="time"
 							name="time"
 							placeholder="Meeti time"
-							defaultValue={moment(meeti.time).format("hh:mm")}
+							defaultValue={meeti.time.toString()}
 						/>
 					</div>
 				</div>

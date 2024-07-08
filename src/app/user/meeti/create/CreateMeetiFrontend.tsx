@@ -60,13 +60,11 @@ export default function CreateMeetiFrontend({
 		
 		const data = await createMeeti(formData);
 		
-		console.log(`Response: `, data);
 		if(data.messages) {
 			setMessages(data.messages);
 		}
 		
 		const isSuccess = requestWasSuccessful(data);
-		console.log(`Was request successful: `, isSuccess);
 		
 		// Redirect to admin panel
 		if(isSuccess) {

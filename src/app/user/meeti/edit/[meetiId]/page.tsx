@@ -31,9 +31,6 @@ export default async function EditMeeti({
 		}];
 	}
 	
-	const groups: Array<Group> | undefined = undefined;
-	const meeti: Meeti = editMeetiResponse.meeti;
-	
 	// Check if it's successful
 	const isSuccess = requestWasSuccessful(editMeetiResponse);
 	if(!isSuccess) {
@@ -43,6 +40,9 @@ export default async function EditMeeti({
 			</main>
 		);
 	}
+	
+	const groups: Array<Group> | undefined = editMeetiResponse.groups;
+	const meeti: Meeti = editMeetiResponse.meeti;
 	
 	return (
 		<div>
