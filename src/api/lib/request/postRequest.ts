@@ -5,7 +5,7 @@ import createAxiosInstance from "@/lib/createAxiosInstance";
 /**
  * Seeing that behavior is many times similar, this is the generalization of sending a request.
  */
-export default async function sendRequest(endpoint: string, formData: FormData) {
+export default async function postRequest(endpoint: string, formData: FormData) {
 	try {
 		const instance = createAxiosInstance();
 		

@@ -11,28 +11,26 @@ import Meeti from "@/types/Meeti";
 import { editMeeti } from "@/api/requestTypes";
 import moment from "moment";
 import { requestWasSuccessful } from "@/lib/status";
+import Address from "@/types/Address";
 
 /**
  * 
  */
 export default function EditMeetiFrontend({
 	groups,
-	meeti
+	meeti,
+	address: previousAddress
 }: {
 	groups: Array<Group> | undefined,
-	meeti: Meeti
+	meeti: Meeti,
+	address: Address,
 }) {
 	const url = apiUrl();
 	const [coordinates, setCoordinates] = useState([
 		51.505,
 		-0.09,
 	]);
-	const [address, setAddress] = useState({
-		street: "",
-		city: "",
-		state: "",
-		country: "",
-	});
+	const [address, setAddress] = useState(previousAddress);
 	const [messages, setMessages] = useState([]);
 	
 	const form = useRef(null);
@@ -64,10 +62,10 @@ export default function EditMeetiFrontend({
 		const formData = new FormData(form.current);
 		
 		const data = await editMeeti(formData, meeti.id);
-		
 		if(data.messages) {
 			setMessages(data.messages);
 		}
+		console.log(`Data: `, data);
 		
 		const isSuccess = requestWasSuccessful(data);
 		
@@ -76,10 +74,6 @@ export default function EditMeetiFrontend({
 			location.href = "/user/admin";
 		}
 	}
-	
-	// console.log(`Date: `, moment(meeti.date).format("YYYY-MM-DD"));
-	// console.log(`Time of the meeti: `, meeti.time);
-	// console.log(`Time: `, moment(meeti.time).format("hh:mm"));
 	
 	return (
 		<main className="contenedor contenedor-formularios">
@@ -109,7 +103,7 @@ export default function EditMeetiFrontend({
 						name="title"
 						id="title"
 						placeholder="Meeti title"
-						value={meeti.title}
+						defaultValue={meeti.title}
 					/>
 				</div>
 				
@@ -120,7 +114,7 @@ export default function EditMeetiFrontend({
 						name="featuring"
 						id="featuring"
 						placeholder="Featured person(Optional)"
-						value={meeti.featuring}
+						defaultValue={meeti.featuring}
 					/>
 				</div>
 				
@@ -165,13 +159,25 @@ export default function EditMeetiFrontend({
 				
 				<div className="campo">
 					<label htmlFor="coupon">Coupon</label>
-					<input type="number" min="1" name="coupon" placeholder="Meeti coupons(Optional)" />
+					<input
+						type="number"
+						min="1"
+						name="coupon"
+						placeholder="Meeti coupons(Optional)"
+						defaultValue={meeti.coupon}
+					/>
 				</div>
 				
 				<div className="campo descripcion">
 					<label htmlFor="description">Description</label>
 					<div className="contenedor-editor">
-						<input type="hidden" name="description" id="description" placeholder="Description" />
+						<input
+							type="hidden"
+							name="description"
+							id="description"
+							placeholder="Description"
+							defaultValue={meeti.description}
+						/>
 						<trix-editor input="description"></trix-editor>
 					</div>
 				</div>
@@ -190,7 +196,7 @@ export default function EditMeetiFrontend({
 						updateCallback={updateMarkerCallback}
 					/>
 				</div>
-		
+				
 				<p className="informacion">Confirm that the location is correct</p>
 				<div className="campo">
 					<label htmlFor="street">Street</label>
@@ -200,7 +206,7 @@ export default function EditMeetiFrontend({
 						id="street"
 						placeholder="Street"
 						ref={street}
-						value={address.street}
+						defaultValue={address.street}
 					/>
 				</div>
 				<div className="campo">
@@ -211,7 +217,7 @@ export default function EditMeetiFrontend({
 						id="city"
 						placeholder="City"
 						ref={city}
-						value={address.city}
+						defaultValue={address.city}
 					/>
 				</div>
 				<div className="campo">
@@ -222,7 +228,7 @@ export default function EditMeetiFrontend({
 						id="state"
 						placeholder="State/Province"
 						ref={state}
-						value={address.state}
+						defaultValue={address.state}
 					/>
 				</div>
 				<div className="campo">
@@ -233,7 +239,7 @@ export default function EditMeetiFrontend({
 						id="country"
 						placeholder="Country"
 						ref={country}
-						value={address.country}
+						defaultValue={address.country}
 					/>
 				</div>
 				
@@ -243,7 +249,7 @@ export default function EditMeetiFrontend({
 					id="latitude"
 					placeholder="Latitude"
 					ref={latitude}
-					value={coordinates[0]}
+					defaultValue={coordinates[0]}
 				/>
 				<input
 					type="hidden"
@@ -251,7 +257,7 @@ export default function EditMeetiFrontend({
 					id="longitude"
 					placeholder="Longitude"
 					ref={longitude}
-					value={coordinates[1]}
+					defaultValue={coordinates[1]}
 				/>
 				
 				<div className="campo enviar">

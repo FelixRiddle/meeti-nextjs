@@ -1,3 +1,4 @@
+import Address from "./Address";
 import { User } from "./User";
 
 /**
@@ -16,4 +17,7 @@ export default interface Meeti {
 	userId: number;
 	groupId: string;
 	addressId: number;
+	address?: Address;
+	createdAt: Date;
+	updatedAt: Date;
 }

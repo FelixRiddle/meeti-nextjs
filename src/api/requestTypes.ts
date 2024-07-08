@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import getRequest from "./lib/request/getRequest";
-import sendRequest from "./lib/request/sendRequest";
+import postRequest from "./lib/request/postRequest";
 import multipartRequest from "./lib/request/multipartRequest";
 import deleteRequest from "./lib/request/deleteRequest";
 
@@ -25,12 +25,12 @@ export const userAdmin = () => getRequest(`/rest/user/admin`);
 export const getEditMeeti = (meetiId: number) => getRequest(`/rest/user/meeti/edit/${meetiId}`);
 
 // Post requests
-export const registerUser = (data: FormData) => sendRequest('/rest/auth/register', data);
-export const editGroup = (data: FormData, id: string) => sendRequest(`/rest/user/group/edit/${id}`, data);
-export const createMeeti = (data: FormData) => sendRequest(`/rest/user/meeti/create`, data);
+export const registerUser = (data: FormData) => postRequest('/rest/auth/register', data);
+export const editGroup = (data: FormData, id: string) => postRequest(`/rest/user/group/edit/${id}`, data);
+export const createMeeti = (data: FormData) => postRequest(`/rest/user/meeti/create`, data);
 export const editMeeti = (
 	data: FormData, meetiId: number
-) => sendRequest(`/rest/user/meeti/edit/${meetiId}`, data);
+) => postRequest(`/rest/user/meeti/edit/${meetiId}`, data);
 
 // Multipart
 export const createGroup = (data: FormData) => multipartRequest("/rest/user/group/new", data);

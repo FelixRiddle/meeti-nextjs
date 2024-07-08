@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import Message from "@/types/Message";
 
 /**
@@ -12,7 +14,7 @@ export default function Messages({
 		<div>
 			{messages.map((msg) => {
 				return (
-					<div className="alertas" key={msg.message}>
+					<div className="alertas" key={uuidv4()}>
 						<p className={`alerta ${msg.type || "error"}`}>{msg.message}</p>
 					</div>
 				);
