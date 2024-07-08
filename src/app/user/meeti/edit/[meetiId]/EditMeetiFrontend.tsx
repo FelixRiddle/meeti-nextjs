@@ -27,8 +27,8 @@ export default function EditMeetiFrontend({
 }) {
 	const url = apiUrl();
 	const [coordinates, setCoordinates] = useState([
-		51.505,
-		-0.09,
+		previousAddress.latitude || 51.505,
+		previousAddress.longitude || -0.09,
 	]);
 	const [address, setAddress] = useState(previousAddress);
 	const [messages, setMessages] = useState([]);
@@ -65,7 +65,6 @@ export default function EditMeetiFrontend({
 		if(data.messages) {
 			setMessages(data.messages);
 		}
-		console.log(`Data: `, data);
 		
 		const isSuccess = requestWasSuccessful(data);
 		
