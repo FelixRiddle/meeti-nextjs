@@ -25,7 +25,7 @@ export default function AdminFrontend({
 						New group
 					</a>
 					<a href="/user/meeti/create" className="btn btn-azul">Create Meeti</a>
-					<a href="/user/profile/edit" className="btn btn-rosa">Edit profile</a>
+					<a href={`/user/profile/edit`} className="btn btn-rosa">Edit profile</a>
 					<a href="/user/profile/image/edit" className="btn btn-verde">Change pfp</a>
 				</div>
 				

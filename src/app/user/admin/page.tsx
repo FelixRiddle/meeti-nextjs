@@ -2,7 +2,6 @@
 
 import { userAdmin } from "@/api/requestTypes";
 import AdminFrontend from "./AdminFrontend";
-import Messages from "@/components/Messages";
 import { requestWasSuccessful } from "@/lib/status";
 import ResourceFailed from "@/components/ResourceFailed";
 

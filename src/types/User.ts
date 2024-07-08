@@ -4,6 +4,7 @@
  */
 export interface User {
 	id: string;
+	description: string;
 	name: string;
 	pfp: string;
 	email: string;
