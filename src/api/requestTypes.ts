@@ -23,6 +23,7 @@ export const getGroupAndCategories = (groupId: string) => getRequest(`/rest/user
 export const singleUserOwnedGroup = (groupId: string) => getRequest(`/rest/user/group/get/${groupId}`);
 export const userAdmin = () => getRequest(`/rest/user/admin`);
 export const getEditMeeti = (meetiId: number) => getRequest(`/rest/user/meeti/edit/${meetiId}`);
+export const getMeeti = (meetiId: string) => getRequest(`/rest/user/meeti/${meetiId}`);
 
 // Post requests
 export const registerUser = (data: FormData) => postRequest('/rest/auth/register', data);
@@ -40,3 +41,4 @@ export const updateGroupImage = (
 
 // Delete requests
 export const deleteUserGroup = (groupId: string) => deleteRequest(`/rest/user/group/delete/${groupId}`);
+export const deleteMeeti = (meetiId: string) => deleteRequest(`/rest/user/meeti/delete/${meetiId}`);
