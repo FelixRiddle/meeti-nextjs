@@ -37,8 +37,6 @@ export default async function EditMeeti({
 		);
 	}
 	
-	console.log(`Edit meeti response: `, editMeetiResponse);
-	
 	const groups: Array<Group> | undefined = editMeetiResponse.groups;
 	const meeti: Meeti = editMeetiResponse.meeti;
 	const address = meeti.address;

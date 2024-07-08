@@ -36,8 +36,6 @@ export default async function DeletePage({
 		);
 	}
 	
-	console.log(`Edit meeti response: `, editMeetiResponse);
-	
 	const meeti: Meeti = editMeetiResponse.meeti;
 	
 	if(!meeti) {

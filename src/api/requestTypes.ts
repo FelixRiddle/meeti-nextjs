@@ -41,4 +41,4 @@ export const updateGroupImage = (
 
 // Delete requests
 export const deleteUserGroup = (groupId: string) => deleteRequest(`/rest/user/group/delete/${groupId}`);
-export const deleteMeeti = (meetiId: string) => deleteRequest(`/rest/user/meeti/delete/${meetiId}`);
+export const deleteMeeti = (meetiId: string) => deleteRequest(`/rest/user/meeti/${meetiId}`);

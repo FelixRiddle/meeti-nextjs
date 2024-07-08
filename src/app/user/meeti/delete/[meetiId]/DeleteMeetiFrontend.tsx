@@ -15,7 +15,7 @@ export default function DeleteMeetiFrontend({
 	return (
 		<main className="contenedor contenedor-formularios">
 			<h1>Delete {meeti.title}</h1>
-			<form action="/user/meeti/delete" method="POST" className="default-form">
+			<form className="default-form">
 				<legend>
 					Delete Meeti? This action cannot be reverted.
 				</legend>
