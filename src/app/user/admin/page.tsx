@@ -12,18 +12,9 @@ import ResourceFailed from "@/components/ResourceFailed";
 export default async function Admin() {
 	const adminResponse = await userAdmin();
 	
-	let messages = undefined;
-	if(!adminResponse) {
-		messages = [{
-		}];
-	} else {
-		messages = adminResponse.messages;
-	}
-	
 	// Check if it's successful
 	const isSuccess = requestWasSuccessful(adminResponse);
 	if(!isSuccess) {
-		// console.log(`Request not successful`);
 		const messages = [{
 			message: "Unexpected error, the server may be offline",
 			type: "error"
@@ -43,7 +34,7 @@ export default async function Admin() {
 	const groups = adminResponse.groups;
 	const futureMeetis = adminResponse.futureMeetis;
 	const pastMeetis = adminResponse.pastMeetis;
-	if(groups && futureMeetis && pastMeetis) {
+	if(!(groups && futureMeetis && pastMeetis)) {
 		const messages = [{
 			message: "Couldn't fetch meeti data, maybe the server is offline",
 			type: "error"
@@ -61,10 +52,6 @@ export default async function Admin() {
 	
 	return (
 		<div>
-			{messages && (
-				<Messages messages={messages} />
-			)}
-			
 			<AdminFrontend
 				userGroups={groups}
 				futureMeetis={futureMeetis}

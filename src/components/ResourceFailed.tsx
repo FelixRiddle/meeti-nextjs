@@ -2,6 +2,7 @@
 
 import Messages from "@/components/Messages";
 import Message from "@/types/Message";
+import { useEffect } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 /**
@@ -14,9 +15,11 @@ export default function ResourceFailed({
 	messages: Array<Message>,
 	redirectTo?: string;
 }) {
-	setTimeout(() => {
-		location.href = redirectTo;
-	}, 5000);
+	useEffect(() => {
+		setTimeout(() => {
+			location.href = redirectTo;
+		}, 5000);
+	}, []);
 	
 	return (
 		<div>
