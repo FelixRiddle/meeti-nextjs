@@ -1,12 +1,14 @@
-import EditUserProfileFrontend from "./EditUserProfileFrontend";
-import ResourceFailed from "@/components/ResourceFailed";
+"use server";
+
 import { getUser } from "@/api/requestTypes";
+import ResourceFailed from "@/components/ResourceFailed";
 import { requestWasSuccessful } from "@/lib/status";
+import ProfileFrontend from "./ProfileFrontend";
 
 /**
- * Edit user profile
+ * Profile backend
  */
-export default async function EditUserProfile() {
+export default async function Profile() {
 	const userResponse = await getUser();
 	
 	// Check if it's successful
@@ -24,6 +26,7 @@ export default async function EditUserProfile() {
 		);
 	}
 	
+	// Check if the user exists
 	const user = userResponse.user;
 	if(!user) {
 		const messages = [{
@@ -40,7 +43,7 @@ export default async function EditUserProfile() {
 	
 	return (
 		<div>
-			<EditUserProfileFrontend
+			<ProfileFrontend
 				user={user}
 			/>
 		</div>

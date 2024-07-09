@@ -50,7 +50,6 @@ export default function NewGroupFrontend({
 			
 			<main className="contenedor contenedor-formulario no-padding">
 				<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
-				
 				<Script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></Script>
 				
 				<h1>New group</h1>

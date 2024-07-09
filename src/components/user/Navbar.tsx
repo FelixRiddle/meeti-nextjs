@@ -22,6 +22,7 @@ export default async function Navbar({
 			) || (
 				<nav className="nav">
 					<a href="/user/admin">Admin</a>
+					<a href="/user/profile">Profile</a>
 					<LogoutButton />
 				</nav>
 			)}

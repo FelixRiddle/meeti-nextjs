@@ -2,6 +2,7 @@ import { Group } from "@/types/Group";
 import Meeti from "@/types/Meeti";
 import Link from "next/link";
 import MeetiRowView from "./MeetiRowView";
+import GroupRowView from "./GroupRowView";
 
 /**
  * Admin frontend
@@ -54,16 +55,10 @@ export default function AdminFrontend({
 						<ul>
 							{userGroups.map((group) => {
 								return (
-									<li key={group.id}>
-										<div className="informacion-admin">
-											<h3>{group.name}</h3>
-										</div>
-										<div className="acciones contenedor-bottones">
-											<a href={`/user/group/edit/${group.id}`} className="btn btn-verde">Edit</a>
-											<a href={`/user/group/image/${group.id}`} className="btn btn-azul2">Image</a>
-											<a href={`/user/group/delete/${group.id}`} className="btn btn-rojo">Delete</a>
-										</div>
-									</li>
+									<GroupRowView
+										key={group.id}
+										group={group}
+									/>
 								);
 							})}
 						</ul>
