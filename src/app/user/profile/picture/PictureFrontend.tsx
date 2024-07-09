@@ -1,28 +1,26 @@
 "use client";
 
-import { updateGroupImage } from "@/api/requestTypes";
+import { profilePicture } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
+import UserImage from "@/components/user/UserImage/Index";
 import apiUrl from "@/lib/config/apiUrl";
 import { requestWasSuccessful } from "@/lib/status";
-import { Group } from "@/types/Group";
+import { User } from "@/types/User";
 import { useRef, useState } from "react";
 
 /**
- * Change image
+ * Picture frontend
  */
-export default function ChangeImageFrontend({
-	group
+export default function PictureFrontend({
+	user
 }: {
-	group: Group
+	user: User,
 }) {
-	const url = apiUrl();
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
 	
 	async function submitForm(e: any) {
 		e.preventDefault();
-		
-		console.log(`Update image`);
 		
 		if(!form) {
 			return;
@@ -30,8 +28,7 @@ export default function ChangeImageFrontend({
 		
 		const formData = new FormData(form.current);
 		
-		const data = await updateGroupImage(formData, group.id);
-		
+		const data = await profilePicture(formData);
 		if(!data || typeof data === "string") {
 			return;
 		}
@@ -44,33 +41,42 @@ export default function ChangeImageFrontend({
 		
 		// Redirect to admin panel
 		if(isSuccess) {
-			location.href = "/user/admin";
+			window.history.go(-1);
 		}
 	}
 	
 	return (
 		<main className="contenedor contenedor-formularios no-padding">
-			<h1>{group.name}</h1>
-			
 			<Messages messages={messages} />
 			
+			<h1>Profile picture</h1>
+			
 			<form className="default-form" method="POST" encType="multipart/form-data" ref={form}>
+				<legend>
+					Upload a profile picture
+				</legend>
+				
 				<div className="campo">
 					<label htmlFor="image">Image</label>
 					<input type="file" name="image" placeholder="Group image" />
 				</div>
 				
-				{group.image && (
+				{user.pfp && (
 					<div className="campo">
 						<label htmlFor="">Current image</label>
-						<img src={`${url}/public/uploads/groups/${group.image}`} alt="Group image" width="400" />
+						<UserImage user={user} />
 					</div>
 				) || (
 					<p>This group has no image</p>
 				)}
 				
 				<div className="campo enviar">
-					<input type="submit" value="Update image" className="btn btn-rosa" onClick={submitForm} />
+					<input
+						type="submit"
+						value="Update image"
+						className="btn btn-rosa"
+						onClick={submitForm}
+					/>
 				</div>
 			</form>
 		</main>

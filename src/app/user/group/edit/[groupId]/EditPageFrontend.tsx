@@ -53,7 +53,7 @@ export default function EditPageFrontend({
 		<div>
 			<Messages messages={messages}/>
 			
-			<main className="contenedor contenedor-formulario no-padding">
+			<main className="contenedor contenedor-formularios no-padding">
 				<link rel="stylesheet" href={`${url}/public/package/trix@2.1.1/dist/trix.css`} />
 				
 				<script src={`${url}/public/package/trix@2.1.1/dist/trix.umd.js`}></script>

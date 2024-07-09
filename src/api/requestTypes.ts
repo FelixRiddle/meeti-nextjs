@@ -41,6 +41,7 @@ export const createGroup = (data: FormData) => multipartRequest("/rest/user/grou
 export const updateGroupImage = (
 	data: FormData, groupId: string
 ) => multipartRequest(`/rest/user/group/image/${groupId}`, data);
+export const profilePicture = (data: FormData) => multipartRequest("/rest/user/profile/picture", data);
 
 // Delete requests
 export const deleteUserGroup = (groupId: string) => deleteRequest(`/rest/user/group/delete/${groupId}`);
