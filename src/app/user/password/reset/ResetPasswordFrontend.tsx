@@ -2,7 +2,6 @@
 
 import { changePassword } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
-import apiUrl from "@/lib/config/apiUrl";
 import { requestWasSuccessful } from "@/lib/status";
 import { useRef, useState } from "react";
 
@@ -10,10 +9,12 @@ import { useRef, useState } from "react";
  * Reset password frontend
  */
 export default function ResetPasswordFrontend() {
-	const url = apiUrl();
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
 	
+	/**
+	 * Submit formulary
+	 */
 	async function submitForm(e: any) {
 		e.preventDefault();
 		
@@ -37,7 +38,7 @@ export default function ResetPasswordFrontend() {
 		
 		// Redirect to admin panel
 		if(isSuccess) {
-			location.href = "/user/admin";
+			window.history.go(-1);
 		}
 	}
 	
@@ -47,21 +48,34 @@ export default function ResetPasswordFrontend() {
 			
 			<h1>Reset password formulary</h1>
 			
-			<form action="/user/password/reset" className="default-form" method="POST">
+			{/* Update password */}
+			<form ref={form} className="default-form" method="POST">
 				<div className="campo">
 					<label htmlFor="password">Actual password</label>
-					<input type="text" name="password" id="password" placeholder="Actual password" />
+					<input
+						type="password"
+						name="password"
+						id="password"
+						placeholder="Actual password"
+					/>
 				</div>
 				
 				<div className="campo">
 					<label htmlFor="newPassword">New password</label>
-					<input type="text" name="newPassword" id="newPassword" placeholder="New password" />
+					<input
+						type="password"
+						name="newPassword"
+						id="newPassword"
+						placeholder="New password"
+					/>
 				</div>
 				
 				<div className="campo">
-					<label htmlFor="confirmPassword">Repeat password</label>
+					<label
+						htmlFor="confirmPassword"
+					>Repeat password</label>
 					<input
-						type="text"
+						type="password"
 						name="confirmPassword"
 						id="confirmPassword"
 						placeholder="Confirm password"
@@ -69,7 +83,12 @@ export default function ResetPasswordFrontend() {
 				</div>
 				
 				<div className="campo enviar">
-					<input type="submit" value="Save changes" className="btn btn-rosa" />
+					<input
+						type="submit"
+						value="Save changes"
+						className="btn btn-rosa"
+						onClick={submitForm}
+					/>
 				</div>
 			</form>
 		</main>
