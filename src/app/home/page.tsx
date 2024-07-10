@@ -2,9 +2,10 @@
 
 import apiUrl from "@/lib/config/apiUrl";
 import HomeSearchBar from "./HomeSearchBar";
-import { getCategories, getHome } from "@/api/requestTypes";
-import Meeti from "@/types/Meeti";
+import { getHome } from "@/api/requestTypes";
 import moment from "moment";
+import MeetiCard from "./MeetiCard";
+import ICardMeeti from "@/types/ICardMeeti";
 
 /**
  * Home
@@ -22,7 +23,7 @@ export default async function Home() {
 	
 	console.log(`Response: `, response);
 	const categories = response.categories || [];
-	const meetis: Array<Meeti> = response.meetis || [];
+	const meetis: Array<ICardMeeti> = response.meetis || [];
 	
 	moment.locale("en");
 	
@@ -42,31 +43,9 @@ export default async function Home() {
 				<div className="grid columnas-md-3">
 					{meetis.map((meeti) => {
 						return (
-							<div className="card">
-								<img
-									src={`${url}/public/uploads/groups/${meeti.group.image}`}
-									alt={meeti.title} />
-								<div className="card-texto">
-									<p className="fecha">{
-										moment(`${meeti.date} ${meeti.time}`).format("LLLL")
-									}</p>
-									<a href="#">
-										<h3>
-											Business and Entrepneurship
-										</h3>
-									</a>
-									<div className="info-autor">
-										<div className="image">
-										</div>
-										<div className="informacion">
-											<p>Organized by:</p>
-											<p className="autor">
-												Felix Riddle
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
+							<MeetiCard
+								meeti={meeti}
+							/>
 						);
 					})}
 				</div>

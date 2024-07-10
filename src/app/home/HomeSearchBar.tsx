@@ -22,7 +22,7 @@ export default function HomeSearchBar({
 						<option defaultValue="" disabled={true}>-- Select one --</option>
 						{categories.map((category) => {
 							return (
-								<option defaultValue={category.id}>{category.name}</option>
+								<option defaultValue={category.id} key={category.id}>{category.name}</option>
 							);
 						})}
 					</select>
