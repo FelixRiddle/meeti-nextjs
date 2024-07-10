@@ -2,7 +2,9 @@
 
 import apiUrl from "@/lib/config/apiUrl";
 import HomeSearchBar from "./HomeSearchBar";
-import { getCategories } from "@/api/requestTypes";
+import { getCategories, getHome } from "@/api/requestTypes";
+import Meeti from "@/types/Meeti";
+import moment from "moment";
 
 /**
  * Home
@@ -11,12 +13,18 @@ export default async function Home() {
 	const url = apiUrl();
 	
 	const [
-		categoriesResponse
+		// categoriesResponse,
+		response,
 	] = await Promise.all([
-		getCategories(),
+		// getCategories(),
+		getHome()
 	]);
 	
-	const categories = categoriesResponse.categories;
+	console.log(`Response: `, response);
+	const categories = response.categories || [];
+	const meetis: Array<Meeti> = response.meetis || [];
+	
+	moment.locale("en");
 	
 	return (
 		<div>
@@ -32,74 +40,35 @@ export default async function Home() {
 			<div className="contenedor">
 				<h2>Upcoming Meeti's</h2>
 				<div className="grid columnas-md-3">
-					<div className="card">
-						<img src={`${url}/public/img/imagen1.jpg`} alt="Business and Entrepneurship" />
-						<div className="card-texto">
-							<p className="fecha">Thursday, September 11, 2025 10:35 AM</p>
-							<a href="#">
-								<h3>
-									Business and Entrepneurship
-								</h3>
-							</a>
-							<div className="info-autor">
-								<div className="image">
-								</div>
-								<div className="informacion">
-									<p>Organized by:</p>
-									<p className="autor">
-										Felix Riddle
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div className="card">
-						<img
-							src={`${url}/public/img/imagen2.jpg`}
-							alt="Bitcoin and cryptocurrencies"
-						/>
-						<div className="card-texto">
-							<p className="fecha"> Thursday, December 18, 2025 10:44 AM </p>
-							<a href="#">
-								<h3>
-									Bitcoin and cryptocurrencies
-								</h3>
-							</a>
-							<div className="info-autor">
-								<div className="image">
-								</div>
-								<div className="informacion">
-									<p>Organized by:</p>
-									<p className="autor">
-										Felix Riddle
-									</p>
+					{meetis.map((meeti) => {
+						return (
+							<div className="card">
+								<img
+									src={`${url}/public/uploads/groups/${meeti.group.image}`}
+									alt={meeti.title} />
+								<div className="card-texto">
+									<p className="fecha">{
+										moment(`${meeti.date} ${meeti.time}`).format("LLLL")
+									}</p>
+									<a href="#">
+										<h3>
+											Business and Entrepneurship
+										</h3>
+									</a>
+									<div className="info-autor">
+										<div className="image">
+										</div>
+										<div className="informacion">
+											<p>Organized by:</p>
+											<p className="autor">
+												Felix Riddle
+											</p>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					
-					<div className="card">
-						<img src={`${url}/public/img/imagen3.jpg`} alt="Food and drinks" />
-						<div className="card-texto">
-							<p className="fecha"> Thursday, December 12, 2025 10:44 AM </p>
-							<a href="#">
-								<h3>
-									Food and drinks
-								</h3>
-							</a>
-							<div className="info-autor">
-								<div className="image">
-								</div>
-								<div className="informacion">
-									<p>Organized by:</p>
-									<p className="autor">
-										Felix Riddle
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
+						);
+					})}
 				</div>
 			</div>
 			

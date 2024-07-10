@@ -13,18 +13,23 @@ export default function HomeSearchBar({
 			<div className="contenedor">
 				<h2>Find a group in your city</h2>
 				<form action="#">
-					<select name="category" id="category" className="categoria">
-						<option value="" disabled selected>-- Select one --</option>
+					<select
+						name="category"
+						id="category"
+						className="categoria"
+						defaultValue={""}
+					>
+						<option defaultValue="" disabled={true}>-- Select one --</option>
 						{categories.map((category) => {
 							return (
-								<option value={category.id}>{category.name}</option>
+								<option defaultValue={category.id}>{category.name}</option>
 							);
 						})}
 					</select>
 					<input type="text" name="name" id="name" placeholder="Meeti name" />
 					<input type="text" name="city" placeholder="City" />
 					<input type="text" name="country" placeholder="Country" />
-					<input type="submit" value="Search" className="btn btn-rosa" />
+					<input type="submit" defaultValue="Search" className="btn btn-rosa" />
 				</form>
 			</div>
 		</div>
