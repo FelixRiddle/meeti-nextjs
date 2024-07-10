@@ -16,6 +16,7 @@ export default function PictureFrontend({
 }: {
 	user: User,
 }) {
+	const url = apiUrl();
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
 	
@@ -28,7 +29,17 @@ export default function PictureFrontend({
 		
 		const formData = new FormData(form.current);
 		
-		const data = await profilePicture(formData);
+		// This would work if I stored cookies in the frontend
+		const apiUrl = `${url}/rest/user/profile/picture`;
+		const directApiResponse = await fetch(apiUrl, {
+			headers: {
+				"Content-Type": "multipart/form-data"
+			},
+			body: formData,
+			method: "POST"
+		});
+		const data = await directApiResponse.json();
+		
 		if(!data || typeof data === "string") {
 			return;
 		}
@@ -57,8 +68,8 @@ export default function PictureFrontend({
 				</legend>
 				
 				<div className="campo">
-					<label htmlFor="image">Image</label>
-					<input type="file" name="image" placeholder="Group image" />
+					<label htmlFor="pfp">Image</label>
+					<input type="file" name="pfp" placeholder="Profile picture" />
 				</div>
 				
 				{user.pfp && (
@@ -67,13 +78,13 @@ export default function PictureFrontend({
 						<UserImage user={user} />
 					</div>
 				) || (
-					<p>This group has no image</p>
+					<p>You don't have a profile picture</p>
 				)}
 				
 				<div className="campo enviar">
 					<input
 						type="submit"
-						value="Update image"
+						defaultValue="Update profile picture"
 						className="btn btn-rosa"
 						onClick={submitForm}
 					/>

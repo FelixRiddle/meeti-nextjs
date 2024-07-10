@@ -2,6 +2,7 @@
 
 import loginRequest from "@/api/auth/loginRequest";
 import Messages from "@/components/Messages";
+import apiUrl from "@/lib/config/apiUrl";
 import { requestWasSuccessful } from "@/lib/status";
 import { useRef, useState } from "react";
 
@@ -9,6 +10,7 @@ import { useRef, useState } from "react";
  * Login page
  */
 export default function LoginFrontend() {
+	const url = apiUrl();
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
 	
@@ -21,14 +23,31 @@ export default function LoginFrontend() {
 		
 		const formData = new FormData(form.current);
 		
-		const data = await loginRequest(formData);
+		// Login to NextJS api backend
+		// Because of a problem with uploading files, we've got to login directly too
+		const [
+			apiResponse,
+		] = await Promise.all([
+			loginRequest(formData),
+		]);
 		
-		if(data.messages) {
-			setMessages(data.messages);
+		// const directApiResponse = await fetch(`${url}/rest/auth/login`, {
+		// 	headers: {
+		// 		"Content-Type": "application/json"
+		// 	},
+		// 	body: formData,
+		// 	method: "POST"
+		// })
+		// const fetchData = await directApiResponse.json();
+		
+		// Messages
+		const messages = apiResponse.messages;
+		if(messages) {
+			setMessages(messages);
 		}
 		
 		// Redirect to home
-		if(requestWasSuccessful(data)) {
+		if(requestWasSuccessful(apiResponse)) {
 			location.href = "/";
 		}
 	}

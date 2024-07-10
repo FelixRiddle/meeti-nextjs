@@ -37,6 +37,11 @@ export const editUserProfile = (data: FormData) => postRequest("/rest/user/profi
 export const changePassword = (data: FormData) => postRequest("/rest/user/password/reset", data);
 
 // Multipart
+// Can't be uploaded normally there are two alternative ways
+// 1) Directly uploading it(Not using server side nextjs api, directly from the client instead)
+// 2) Store locally and then send to the server
+// Reference/s:
+// https://stackoverflow.com/questions/71647581/how-do-i-pass-through-a-file-upload-request-from-a-next-js-api-to-another-api
 export const createGroup = (data: FormData) => multipartRequest("/rest/user/group/new", data);
 export const updateGroupImage = (
 	data: FormData, groupId: string

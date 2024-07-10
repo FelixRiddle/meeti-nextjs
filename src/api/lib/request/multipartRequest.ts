@@ -6,6 +6,8 @@ import { cookies } from "next/headers";
 
 /**
  * Seeing that behavior is many times similar, this is the generalization of sending a request.
+ * 
+ * @deprecated See https://stackoverflow.com/questions/71647581/how-do-i-pass-through-a-file-upload-request-from-a-next-js-api-to-another-api
  */
 export default async function multipartRequest(endpoint: string, formData: FormData) {
 	try {
