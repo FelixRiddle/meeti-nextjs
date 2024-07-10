@@ -1,12 +1,22 @@
 "use server";
 
 import apiUrl from "@/lib/config/apiUrl";
+import HomeSearchBar from "./HomeSearchBar";
+import { getCategories } from "@/api/requestTypes";
 
 /**
  * Home
  */
 export default async function Home() {
 	const url = apiUrl();
+	
+	const [
+		categoriesResponse
+	] = await Promise.all([
+		getCategories(),
+	]);
+	
+	const categories = categoriesResponse.categories;
 	
 	return (
 		<div>
@@ -15,23 +25,9 @@ export default async function Home() {
 				<a href="/auth/register" className="btn btn-amarillo">Create account</a>
 			</div>
 			
-			<div className="buscador-inicio">
-				<div className="contenedor">
-					<h2>Find a group in your city</h2>
-					<form action="#">
-						<select name="category" id="category" className="categoria">
-							<option value="" disabled selected>-- Select one --</option>
-							<option value="programming" className="programacion">Programming</option>
-							<option value="design" className="diseno">Design</option>
-							<option value="books" className="libros">Books</option>
-						</select>
-						<input type="text" name="name" id="name" placeholder="Meeti name" />
-						<input type="text" name="city" placeholder="City" />
-						<input type="text" name="country" placeholder="Country" />
-						<input type="submit" value="Search" className="btn btn-rosa" />
-					</form>
-				</div>
-			</div>
+			<HomeSearchBar
+				categories={categories}
+			/>
 			
 			<div className="contenedor">
 				<h2>Upcoming Meeti's</h2>
