@@ -21,7 +21,7 @@ export default function MeetiCard({
 				<p className="fecha">{
 					moment(`${meeti.date} ${meeti.time}`).format("LLLL")
 				}</p>
-				<a href="#">
+				<a href={`/meeti/${meeti.slug}`}>
 					<h3>
 						{meeti.title}
 					</h3>

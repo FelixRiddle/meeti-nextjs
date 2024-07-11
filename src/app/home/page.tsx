@@ -14,16 +14,13 @@ export default async function Home() {
 	const url = apiUrl();
 	
 	const [
-		// categoriesResponse,
 		response,
 	] = await Promise.all([
-		// getCategories(),
 		getHome()
 	]);
 	
-	console.log(`Response: `, response);
-	const categories = response.categories || [];
-	const meetis: Array<ICardMeeti> = response.meetis || [];
+	const categories = response && response.categories || [];
+	const meetis: Array<ICardMeeti> = response && response.meetis || [];
 	
 	moment.locale("en");
 	
