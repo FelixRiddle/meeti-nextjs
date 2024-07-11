@@ -1,9 +1,12 @@
 "use client";
 
+import moment from "moment";
+import { useRef, useState } from "react";
+
+import { meetiParticipate } from "@/api/requestTypes";
+import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import ICompleteMeeti from "@/types/ICompleteMeeti";
-import moment from "moment";
-import Image from "next/image";
 
 /**
  * Meeti frontend
@@ -14,18 +17,40 @@ export default function MeetiFrontend({
 	meeti: ICompleteMeeti
 }) {
 	const url = apiUrl();
+	const form = useRef(null);
+	const [messages, setMessages] = useState([]);
 	moment.locale("en");
+	
+	async function participate(e: any) {
+		e.preventDefault();
+		
+		if(!form) {
+			return;
+		}
+		
+		const formData = new FormData(form.current);
+		
+		const data = await meetiParticipate(formData);
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
+	}
 	
 	return (
 		<div>
 			<link rel="stylesheet" href={`${url}/public/css/meeti/index.css`} />
-
+			
+			<Messages
+				messages={messages}
+			/>
+			
 			<div className="eventHeader">
 				<div className="contenedor">
 					<div className="eventSummary">
 						<h1>{meeti.title}</h1>
-						<div className="info-autor">
-							<div className="imagen">
+						<div className="infoAuthor">
+							<div className="image">
 								{meeti.user.pfp && (
 									<img
 										src={`${url}/public/user/${meeti.user.id}/${meeti.user.pfp}`}
@@ -35,7 +60,7 @@ export default function MeetiFrontend({
 							</div>
 							<div className="informacion">
 								<p>By:</p>
-								<p className="autor">
+								<p className="author">
 									<a
 										href={`${url}/user-profile/${meeti.user.id}`}
 									>{meeti.user.name}</a> creator of:
@@ -48,10 +73,17 @@ export default function MeetiFrontend({
 					</div>
 					
 					{meeti.user && (
-						<div className="participate">
+						<form action={`${url}/rest/user/participate`} method="POST" ref={form}>
 							<p>Will you participate?</p>
-							<a href="#" className="btn btn-azul">Yes</a>
-						</div>
+							<input type="hidden" value={meeti.id} name="meetiId" />
+							<input
+								type="button"
+								className="btn btn-azul"
+								id="participateButton"
+								value="Participate"
+								onClick={participate}
+							/>
+						</form>
 					) || (
 						<div className="participate">
 						</div>
@@ -66,10 +98,9 @@ export default function MeetiFrontend({
 							<img
 								src={`${url}/public/uploads/groups/${meeti.group.image}`}
 								alt="Meeti image"
-								// width={1366}
-								// height={768}
 							/>
-							{meeti.description}
+							
+							<div dangerouslySetInnerHTML={{ __html: meeti.description }}></div>
 						</div>
 						
 						<div className="asistentes">

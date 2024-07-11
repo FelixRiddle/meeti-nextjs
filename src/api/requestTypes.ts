@@ -37,6 +37,9 @@ export const editMeeti = (
 ) => postRequest(`/rest/user/meeti/edit/${meetiId}`, data);
 export const editUserProfile = (data: FormData) => postRequest("/rest/user/profile/edit", data);
 export const changePassword = (data: FormData) => postRequest("/rest/user/password/reset", data);
+export const meetiParticipate = (
+	data: FormData,
+) => postRequest(`/rest/user/participate`, data);
 
 // Multipart
 // Can't be uploaded normally there are two alternative ways

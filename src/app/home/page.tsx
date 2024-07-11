@@ -26,6 +26,8 @@ export default async function Home() {
 	
 	return (
 		<div>
+			<link rel="stylesheet" href={`${url}/public/css/meeti/index.css`} />
+			
 			<div className="hero">
 				<h1>Find or create a group to share what you like</h1>
 				<a href="/auth/register" className="btn btn-amarillo">Create account</a>

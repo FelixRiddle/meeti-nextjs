@@ -26,8 +26,8 @@ export default function MeetiCard({
 						{meeti.title}
 					</h3>
 				</a>
-				<div className="info-autor">
-					<div className="imagen">
+				<div className="infoAuthor">
+					<div className="image">
 						{meeti.user.pfp && (
 							<img
 								src={`${url}/public/user/${meeti.user.id}/${meeti.user.pfp}`}
@@ -37,7 +37,7 @@ export default function MeetiCard({
 					</div>
 					<div className="informacion">
 						<p>Organized by:</p>
-						<p className="autor">
+						<p className="author">
 							{meeti.user.name}
 						</p>
 					</div>
