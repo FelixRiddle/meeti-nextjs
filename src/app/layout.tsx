@@ -45,7 +45,7 @@ export default async function RootLayout({
             <body>
 				<header className="site-header contenedor">
 					<a href="/">
-						<img src={`${url}/public/img/logo.png`} alt="Meeti Logo" />
+						<img src={`${url}/public/img/meeti.png`} alt="Meeti Logo" />
 					
 						{/* Powered by */}
 						<div className="website-powered-by">

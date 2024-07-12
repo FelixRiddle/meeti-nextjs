@@ -28,6 +28,7 @@ export const getUser = () => getRequest("/rest/user");
 export const getHome = () => getRequest("/rest/home");
 export const getCompleteMeeti = (slug: string) => getRequest(`/rest/meeti/${slug}`);
 export const meetiParticipants = (slug: string) => getRequest(`/rest/meeti/participants/${slug}`);
+export const userProfile = (userId: string) => getRequest(`/rest/users/${userId}`);
 
 // Post requests
 export const registerUser = (data: FormData) => postRequest('/rest/auth/register', data);
