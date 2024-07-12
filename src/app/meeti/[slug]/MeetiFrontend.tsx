@@ -110,7 +110,7 @@ export default function MeetiFrontend({
 						</div>
 						
 						<div className="asistentes">
-							<div className="title">
+							<div className="titulo">
 								<h3>{meeti.participants.length} Participants</h3>
 								<a href={`${url}/meeti/participants/${meeti.slug}`}>See list</a>
 							</div>

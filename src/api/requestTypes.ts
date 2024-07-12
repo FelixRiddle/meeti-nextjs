@@ -27,6 +27,7 @@ export const getMeeti = (meetiId: string) => getRequest(`/rest/user/meeti/${meet
 export const getUser = () => getRequest("/rest/user");
 export const getHome = () => getRequest("/rest/home");
 export const getCompleteMeeti = (slug: string) => getRequest(`/rest/meeti/${slug}`);
+export const meetiParticipants = (slug: string) => getRequest(`/rest/meeti/participants/${slug}`);
 
 // Post requests
 export const registerUser = (data: FormData) => postRequest('/rest/auth/register', data);
