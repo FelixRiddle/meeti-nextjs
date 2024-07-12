@@ -58,10 +58,13 @@ export default async function MeetiPage({
 		);
 	}
 	
+	const participating = completeMeetiResponse.userParticipates;
+	
 	return (
 		<div>
 			<MeetiFrontend
 				meeti={completeMeeti}
+				participating={participating}
 			/>
 		</div>
 	);

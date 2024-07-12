@@ -12,23 +12,29 @@ import ICompleteMeeti from "@/types/ICompleteMeeti";
  * Meeti frontend
  */
 export default function MeetiFrontend({
-	meeti
+	meeti,
+	participating: userIsParticipating
 }: {
-	meeti: ICompleteMeeti
+	meeti: ICompleteMeeti;
+	participating: boolean;
 }) {
 	const url = apiUrl();
 	const form = useRef(null);
 	const [messages, setMessages] = useState([]);
+	const [participating, setParticipating] = useState(userIsParticipating);
 	moment.locale("en");
 	
 	async function participate(e: any) {
 		e.preventDefault();
+		
+		setParticipating(!participating);
 		
 		if(!form) {
 			return;
 		}
 		
 		const formData = new FormData(form.current);
+		formData.append("userId", meeti.userId.toString());
 		
 		const data = await meetiParticipate(formData);
 		
@@ -73,15 +79,15 @@ export default function MeetiFrontend({
 					</div>
 					
 					{meeti.user && (
-						<form action={`${url}/rest/user/participate`} method="POST" ref={form}>
+						<form action="/user/participate" id="participateForm" ref={form}>
 							<p>Will you participate?</p>
 							<input type="hidden" value={meeti.id} name="meetiId" />
 							<input
 								type="button"
-								className="btn btn-azul"
+								className={`btn ${participating ? "btn-rojo" : "btn-azul"}`}
 								id="participateButton"
-								value="Participate"
-								onClick={participate}
+								value={participating ? "Cancel" : "Participate"}
+								onClick={(e) => participate(e)}
 							/>
 						</form>
 					) || (
