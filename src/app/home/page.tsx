@@ -58,7 +58,7 @@ export default async function Home() {
 						{categories.map((category: any) => {
 							return (
 								<li>
-									<a href="#">
+									<a href={`/category/${category.nameId}`}>
 										<img
 											src={`${url}/public/img/category/${category.nameId}.jpg`}
 											alt={category.name}
