@@ -11,17 +11,19 @@ export default function MeetiParticipant({
 	
 	return (
 		<li>
-			<div className="image">
-				{participant.pfp && (
-					<img
-						src={`${url}/public/user/${participant.id}/${participant.pfp}`}
-						alt={`${participant.name} profile picture`}
-					></img>
-				)}
-			</div>
-			<div className="texto">
-				{participant.name}
-			</div>
+			<a href={`/users/${participant.id}`}>
+				<div className="image">
+					{participant.pfp && (
+						<img
+							src={`${url}/public/user/${participant.id}/${participant.pfp}`}
+							alt={`${participant.name} profile picture`}
+						></img>
+					)}
+				</div>
+				<div className="texto">
+					{participant.name}
+				</div>
+			</a>
 		</li>
 	);
 }

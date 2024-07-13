@@ -11,26 +11,30 @@ export default function GroupRow({
 	const url = apiUrl();
 	
 	return (
-		<li>
-			<div className="image">
-				{group.image && (
-					<img
-						src={`${url}/public/uploads/groups/${group.id}`}
-						alt={`${group.name} image`}
-					/>
-				) || (
-					<img
-						src={`${url}/public/img/meeti.png`}
-						alt="Meeti logo"
-					/>
-				)}
-			</div>
-			
-			<div className="text">
-				<a href={`/groups/${group.id}`}>
-					{group.name}
-				</a>
-			</div>
+		<li className="group">
+			<a href={`/groups/${group.id}`}>
+				<div className="groupImage">
+					{group.image && (
+						<img
+							src={`${url}/public/uploads/groups/${group.id}`}
+							alt={`${group.name} image`}
+							width="360"
+							height="180"
+						/>
+					) || (
+						<img
+							src={`${url}/public/img/meeti.png`}
+							alt="Meeti logo"
+							width="360"
+							height="180"
+						/>
+					)}
+				</div>
+				
+				<div className="text">
+						{group.name}
+				</div>
+			</a>
 		</li>
 	);
 }
