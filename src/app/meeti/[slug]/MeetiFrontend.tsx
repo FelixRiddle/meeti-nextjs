@@ -3,7 +3,7 @@
 import moment from "moment";
 import { useRef, useState } from "react";
 
-import { meetiParticipate } from "@/api/requestTypes";
+import { createMeetiComment, meetiParticipate } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import ICompleteMeeti from "@/types/ICompleteMeeti";
@@ -19,7 +19,8 @@ export default function MeetiFrontend({
 	participating: boolean;
 }) {
 	const url = apiUrl();
-	const form = useRef(null);
+	const participateForm = useRef(null);
+	const commentForm = useRef(null);
 	const [messages, setMessages] = useState([]);
 	const [participating, setParticipating] = useState(userIsParticipating);
 	moment.locale("en");
@@ -29,14 +30,33 @@ export default function MeetiFrontend({
 		
 		setParticipating(!participating);
 		
-		if(!form) {
+		if(!participateForm) {
 			return;
 		}
 		
-		const formData = new FormData(form.current);
+		const formData = new FormData(participateForm.current);
 		formData.append("userId", meeti.userId.toString());
 		
 		const data = await meetiParticipate(formData);
+		
+		if(data.messages) {
+			setMessages(data.messages);
+		}
+	}
+	
+	/**
+	 * Create comment
+	 */
+	async function createComment(e: any) {
+		e.preventDefault();
+		
+		if(!commentForm) {
+			return;
+		}
+		
+		const formData = new FormData(commentForm.current);
+		
+		const data = await createMeetiComment(formData, meeti.id);
 		
 		if(data.messages) {
 			setMessages(data.messages);
@@ -79,7 +99,7 @@ export default function MeetiFrontend({
 					</div>
 					
 					{meeti.user && (
-						<form action="/user/participate" id="participateForm" ref={form}>
+						<form action="/user/participate" id="participateForm" ref={participateForm}>
 							<p>Will you participate?</p>
 							<input type="hidden" value={meeti.id} name="meetiId" />
 							<input
@@ -130,7 +150,10 @@ export default function MeetiFrontend({
 								</div>
 							</div>
 							
-							<form action="" className="default-form comentarios">
+							<form
+								className="default-form comentarios"
+								ref={commentForm}
+							>
 								<legend>Create comment</legend>
 								<div className="campo">
 									<label htmlFor="comment">Comment</label>
@@ -138,9 +161,10 @@ export default function MeetiFrontend({
 								</div>
 								<div className="campo enviar">
 									<input
-										type="submit"
+										type="button"
 										value="Create comment"
 										className="btn btn-rosa"
+										onClick={createComment}
 									/>
 								</div>
 							</form>

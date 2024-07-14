@@ -44,6 +44,10 @@ export const changePassword = (data: FormData) => postRequest("/rest/user/passwo
 export const meetiParticipate = (
 	data: FormData,
 ) => postRequest(`/rest/user/participate`, data);
+export const createMeetiComment = (
+	data: FormData,
+	meetiId: string
+) => postRequest(`/rest/user/meeti/comment/${meetiId}`, data);
 
 // Multipart
 // Can't be uploaded normally there are two alternative ways
