@@ -164,6 +164,7 @@ export default function MeetiFrontend({
 										user={user}
 										setMessages={setMessages}
 										deleteLocalComment={deleteSingleComment}
+										meeti={meeti}
 									/>
 								);
 							}) || (

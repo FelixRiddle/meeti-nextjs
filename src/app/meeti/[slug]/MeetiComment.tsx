@@ -1,10 +1,9 @@
-import { useRef } from "react";
-
 import { deleteComment } from "@/api/requestTypes";
 import apiUrl from "@/lib/config/apiUrl";
 import IUserComment from "@/types/IUserComment";
 import Message from "@/types/Message";
 import { User } from "@/types/User";
+import Meeti from "@/types/Meeti";
 
 /**
  * Comment
@@ -14,18 +13,19 @@ export default function MeetiComment({
 	user,
 	setMessages,
 	deleteLocalComment,
+	meeti
 }: {
 	comment: IUserComment;
 	user: User;
 	setMessages: (messages: Array<Message>) => void;
 	deleteLocalComment: (commentId: string) => void;
+	meeti: Meeti;
 }) {
 	const url = apiUrl();
 	
 	async function deleteUserComment(e: any) {
 		e.preventDefault();
 		
-		// FIXME: Not working I don't know why
 		const data = await deleteComment(comment.id);
 		if(deleteLocalComment) {
 			deleteLocalComment(comment.id);
@@ -55,7 +55,7 @@ export default function MeetiComment({
 						style={{ "marginLeft": "3px" }}
 					>{comment.user.name}</a>
 				</p>
-				{comment.user.id === user.id && (
+				{(meeti.userId.toString() === user.id || comment.user.id === user.id) && (
 					<form>
 						<input
 							type="button"
