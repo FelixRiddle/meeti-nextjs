@@ -7,16 +7,23 @@ import { createMeetiComment, meetiParticipate } from "@/api/requestTypes";
 import Messages from "@/components/Messages";
 import apiUrl from "@/lib/config/apiUrl";
 import ICompleteMeeti from "@/types/ICompleteMeeti";
+import MeetiComment from "./MeetiComment";
+import { User } from "@/types/User";
+import IUserComment from "@/types/IUserComment";
 
 /**
  * Meeti frontend
  */
 export default function MeetiFrontend({
 	meeti,
-	participating: userIsParticipating
+	participating: userIsParticipating,
+	comments,
+	user,
 }: {
 	meeti: ICompleteMeeti;
 	participating: boolean;
+	comments: Array<IUserComment>;
+	user: User;
 }) {
 	const url = apiUrl();
 	const participateForm = useRef(null);
@@ -48,7 +55,7 @@ export default function MeetiFrontend({
 	 * Create comment
 	 */
 	async function createComment(e: any) {
-		e.preventDefault();
+		// e.preventDefault();
 		
 		if(!commentForm) {
 			return;
@@ -138,18 +145,20 @@ export default function MeetiFrontend({
 						
 						<div className="comentarios">
 							<h2>Comments</h2>
-							<div className="comentario">
-								<div className="image"></div>
-								<div className="texto">
-									<p>Hello</p>
-									<p>Written by: <span></span></p>
-									<input
-										type="button"
-										value="Delete"
+							{/* Show comments */}
+							{comments.length > 0 && comments.map((comment) => {
+								return (
+									<MeetiComment
+										key={comment.id}
+										comment={comment}
+										user={user}
 									/>
-								</div>
-							</div>
+								);
+							}) || (
+								<p>There are no comments for this Meeti</p>
+							)}
 							
+							{/* Create comment */}
 							<form
 								className="default-form comentarios"
 								ref={commentForm}
