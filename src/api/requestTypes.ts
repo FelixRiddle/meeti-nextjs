@@ -64,3 +64,6 @@ export const profilePicture = (data: FormData) => multipartRequest("/rest/user/p
 // Delete requests
 export const deleteUserGroup = (groupId: string) => deleteRequest(`/rest/user/group/delete/${groupId}`);
 export const deleteMeeti = (meetiId: string) => deleteRequest(`/rest/user/meeti/${meetiId}`);
+export const deleteComment = (
+	commentId: string
+) => deleteRequest(`/rest/user/meeti/comment/delete/${commentId}`);

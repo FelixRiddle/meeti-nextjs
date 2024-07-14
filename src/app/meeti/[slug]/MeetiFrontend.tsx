@@ -17,7 +17,7 @@ import IUserComment from "@/types/IUserComment";
 export default function MeetiFrontend({
 	meeti,
 	participating: userIsParticipating,
-	comments,
+	comments: userComments,
 	user,
 }: {
 	meeti: ICompleteMeeti;
@@ -28,9 +28,19 @@ export default function MeetiFrontend({
 	const url = apiUrl();
 	const participateForm = useRef(null);
 	const commentForm = useRef(null);
+	const [comments, setComments] = useState(userComments);
 	const [messages, setMessages] = useState([]);
 	const [participating, setParticipating] = useState(userIsParticipating);
 	moment.locale("en");
+	
+	/**
+	 * Delete single comment
+	 */
+	function deleteSingleComment(id: string) {
+		setComments((comments) => {
+			return comments.filter((comment) => comment.id !== id);
+		});
+	}
 	
 	async function participate(e: any) {
 		e.preventDefault();
@@ -152,6 +162,8 @@ export default function MeetiFrontend({
 										key={comment.id}
 										comment={comment}
 										user={user}
+										setMessages={setMessages}
+										deleteLocalComment={deleteSingleComment}
 									/>
 								);
 							}) || (
