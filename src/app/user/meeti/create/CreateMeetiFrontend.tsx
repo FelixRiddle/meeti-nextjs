@@ -100,13 +100,18 @@ export default function CreateMeetiFrontend({
 				
 				<div className="campo">
 					<label htmlFor="featuring">Featuring</label>
-					<input type="text" name="featuring" id="featuring" placeholder="Featured person(Optional)" />
+					<input
+						type="text"
+						name="featuring"
+						id="featuring"
+						placeholder="Featured person(Optional)"
+					/>
 				</div>
 				
 				<div className="campo">
 					<label htmlFor="group">Group</label>
 					<select name="groupId" id="groupId">
-						<option value="" disabled={true} defaultValue="">-- Select a group --</option>
+						<option value="" disabled={true}>-- Select a group --</option>
 						{userGroups && userGroups.map((group) => {
 							return (
 								<option value={group.id} key={group.id}>{group.name}</option>

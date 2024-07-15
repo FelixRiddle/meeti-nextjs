@@ -5,6 +5,7 @@ import getRequest from "./lib/request/getRequest";
 import postRequest from "./lib/request/postRequest";
 import multipartRequest from "./lib/request/multipartRequest";
 import deleteRequest from "./lib/request/deleteRequest";
+import { ISearchMeeti } from "@/app/search/page";
 
 // Here I'll register specific endpoint functions
 
@@ -48,6 +49,7 @@ export const createMeetiComment = (
 	data: FormData,
 	meetiId: string
 ) => postRequest(`/rest/user/meeti/comment/${meetiId}`, data);
+export const searchMeeti = (data: FormData) => postRequest("/rest/search", data);
 
 // Multipart
 // Can't be uploaded normally there are two alternative ways
