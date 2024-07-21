@@ -5,7 +5,6 @@ import getRequest from "./lib/request/getRequest";
 import postRequest from "./lib/request/postRequest";
 import multipartRequest from "./lib/request/multipartRequest";
 import deleteRequest from "./lib/request/deleteRequest";
-import { ISearchMeeti } from "@/app/search/page";
 
 // Here I'll register specific endpoint functions
 
